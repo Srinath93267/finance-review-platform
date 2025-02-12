@@ -1,0 +1,17 @@
+<div class="md:flex">
+    <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
+        <li (click)="selectItem(i)" *ngFor="let item of Tabs; let i=index">
+            <a type="button" [ngClass]="selectedItem === i ? activeTabClass:inactiveTabClass">
+                {{Tabs[i]}}
+            </a>
+        </li>
+    </ul>
+    <div class="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">{{selectedTab}}</h3>
+        <div class="mb-2">
+            <app-report-history *ngIf="selectedItem===0" />
+            <app-insights-reports *ngIf="selectedItem===1" />
+            <app-generate-report *ngIf="selectedItem===2"/>
+        </div>
+    </div>
+</div>
