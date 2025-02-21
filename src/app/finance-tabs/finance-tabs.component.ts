@@ -3,11 +3,12 @@ import { ReportHistoryComponent } from "../report-history/report-history.compone
 import { CommonModule } from "@angular/common";
 import { InsightsReportsComponent } from "../insights-reports/insights-reports.component";
 import { GenerateReportComponent } from "../generate-report/generate-report.component";
+import { PresetsComponent } from "../presets/presets.component";
 
 @Component({
   selector: 'app-finance-tabs',
   standalone: true,
-  imports: [ReportHistoryComponent, CommonModule, InsightsReportsComponent, GenerateReportComponent],
+  imports: [ReportHistoryComponent, CommonModule, InsightsReportsComponent, GenerateReportComponent, PresetsComponent],
   templateUrl: './finance-tabs.component.html',
   styleUrl: './finance-tabs.component.css'
 })
