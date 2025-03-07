@@ -1,0 +1,31 @@
+name: Finance Review Platform CI/CD
+
+on:
+  push:
+    branches: [ main, develop, feature/feature-branch-1 ]  # Runs on push to main or develop or feature
+  pull_request:
+    branches: [ main, develop ]  # Runs on PRs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Runs on Linux
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4  # Gets the latest code
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Use the latest stable Node.js
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create environment.ts
+        run: |
+          cp src/environments/environment.ts.example src/environments/environment.ts
+          sed -i 's/PLACEHOLDER_SECRET/${{ secrets.API_SECRET_KEY }}/g' src/environments/environment.ts
+
+      - name: Build Angular App
+        run: npm run build --configuration=production
