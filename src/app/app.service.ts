@@ -32,15 +32,27 @@ export class AppService {
     }
 
     getAllPresetsList(): Observable<Template[]> {
-        return this.http.get<Template[]>(this.GETALLPRESETSLIST);
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        return this.http.get<Template[]>(this.GETALLPRESETSLIST, { headers });
     }
 
     createPreset(newPreset: NewPreset): Observable<Template> {
-        return this.http.put<Template>(this.CREATEPRESET, { name: newPreset.Name, reports: newPreset.Reports, CreatedBy: newPreset.CreatedBy });
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        return this.http.put<Template>(this.CREATEPRESET, { name: newPreset.Name, reports: newPreset.Reports, CreatedBy: newPreset.CreatedBy }, { headers: headers });
     }
 
     deletePreset(id: number) {
-        return this.http.delete(this.DELETEPRESET, { body: id });
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        return this.http.delete(this.DELETEPRESET, { headers, body: id });
     }
 }
 
