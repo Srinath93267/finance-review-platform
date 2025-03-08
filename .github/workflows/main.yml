@@ -20,7 +20,7 @@ jobs:
           node-version: 18  # Use the latest stable Node.js
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Create environment.ts
         run: |
@@ -29,3 +29,10 @@ jobs:
 
       - name: Build Angular App
         run: npm run build --configuration=production
+
+      # - name: Deploy
+      #   if: success()
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     branch: gh-pages  # Branch to deploy
+      #     folder: dist/your-angular-app  # Adjust folder based on `angular.json`

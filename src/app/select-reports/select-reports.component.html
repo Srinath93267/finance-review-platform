@@ -1,0 +1,73 @@
+<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+    *ngIf="showReportAlreadyAdded===true" role="alert" id="showReportAlreadyAdded">
+    Report has been already<span class="font-medium"> added!</span>
+</div>
+<div class="flex justify-end mt-3">
+    <form class="max-w-sm">
+        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a
+            Preset</label>
+        <select id="countries" (change)="selectTemplate($event)"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected>Choose a Template</option>
+            <option value="{{template.id}}" *ngFor="let template of templates">{{template.name}}</option>
+        </select>
+    </form>
+</div>
+<!-- grid grid-flow-row md:grid-flow-col mt-3 -->
+<!-- grid grid-flow-col grid-rows-3 gap-4 -->
+<div class="grid grid-flow-row md:grid-flow-col" style="height:720px;">
+    <div class="row-span-2 row-start-1">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Reports List</h3>
+        <div
+            class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <a type="button" *ngFor="let report of reportsList; let i=index"
+                [ngClass]="selectedIndex==i?(i==0?reportClass1:(i==reportsListCount-1?reportClass4:reportClass3)):reportClass2"
+                (click)="selectReport(i, report.id)">
+                {{report.name}}
+            </a>
+        </div>
+    </div>
+    <div class="row-span-2 row-end-3">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Reports View</h3>
+        <object class="pdf" class="mb-2"
+            data="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf" width="1000"
+            height="604">
+        </object>
+        <button type="button" (click)="AddtoReportList()"
+            class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Add Report
+        </button>
+        <button type="button" (click)="MoveToTitlePage()"
+            class="px-3 py-2 ml-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Go to Title Page
+            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9" />
+            </svg>
+        </button>
+    </div>
+    <div class="row-start-1 row-end-4">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Selected Report(s)</h3>
+        <div class="border-2 border-dashed" id="selectedReports">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)"
+                *ngIf="selectedReportsList.length!==0">
+                @for (report of selectedReportsList; track report) {
+                <div class="example-box" cdkDrag>{{report.name}}
+                    <div>
+                        <button (click)="removeReport(report.id)">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
