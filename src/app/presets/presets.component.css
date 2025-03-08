@@ -1,0 +1,13 @@
+#reportList
+{
+    overflow-y: scroll;
+    height:fit-content;
+}
+
+#showTemplateErrorMessage {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 0.2in;
+    margin-right: 0.2in;
+}

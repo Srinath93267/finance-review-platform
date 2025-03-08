@@ -20,7 +20,7 @@ export class AppService {
     public reportsList: ReportsList[] = [];
     public selectedReportsList: ReportsList[] = [];
     public selectedTemplate: number = 0;
-    public templates: Template[] = [];
+    public templates: Preset[] = [];
     public flow: Reportflow[] = [{ name: "Select Reports", selected: true }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: false }]
 
     getAllReportsList(): Observable<ReportsList[]> {
@@ -31,20 +31,20 @@ export class AppService {
         return this.http.get<ReportsList[]>(this.GETALLREPORTSLIST, { headers });
     }
 
-    getAllPresetsList(): Observable<Template[]> {
+    getAllPresetsList(): Observable<Preset[]> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
         });
-        return this.http.get<Template[]>(this.GETALLPRESETSLIST, { headers });
+        return this.http.get<Preset[]>(this.GETALLPRESETSLIST, { headers });
     }
 
-    createPreset(newPreset: NewPreset): Observable<Template> {
+    createPreset(newPreset: NewPreset): Observable<Preset> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
         });
-        return this.http.put<Template>(this.CREATEPRESET, { name: newPreset.Name, reports: newPreset.Reports, CreatedBy: newPreset.CreatedBy }, { headers: headers });
+        return this.http.put<Preset>(this.CREATEPRESET, { name: newPreset.Name, reports: newPreset.Reports, CreatedBy: newPreset.CreatedBy }, { headers: headers });
     }
 
     deletePreset(id: number) {
@@ -66,7 +66,7 @@ export interface ReportsList {
     name: string;
 }
 
-export interface Template {
+export interface Preset {
     id: number;
     name: string;
     selected: boolean;
