@@ -16,6 +16,7 @@ export class AppService {
     private GETALLPRESETSLIST: string = this.baseUrl + "GetAllPresetsList";
     private CREATEPRESET: string = this.baseUrl + "CreateNewPreset";
     private DELETEPRESET: string = this.baseUrl + "DeletePreset";
+    private GETPORTFOLIOPERFORMANCEDATA: string = this.baseUrl + "GetPortfolioPerformanceData";
 
     public reportsList: ReportsList[] = [];
     public selectedReportsList: ReportsList[] = [];
@@ -54,6 +55,15 @@ export class AppService {
         });
         return this.http.delete(this.DELETEPRESET, { headers, body: id });
     }
+
+    getPortfolioPerformanceData(Account: number) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+            'ACCOUNT': Account
+        });
+        return this.http.get<PortfolioPerformance>(this.GETPORTFOLIOPERFORMANCEDATA, { headers });
+    }
 }
 
 export interface Reportflow {
@@ -77,6 +87,32 @@ export interface NewPreset {
     Name: string;
     Reports: ReportsList[];
     CreatedBy: string;
+}
+
+export interface PortfolioPerformance {
+    portfolioID: number;
+    accountNumber: number;
+    clientName: string;
+    totalPortfolioValue: number;
+
+    // Investment Growth
+    investmentGrowthYTD: number;
+    investmentGrowth1Y: number;
+    investmentGrowth3Y: number;
+    investmentGrowth5Y: number;
+    investmentGrowth10Y: number;
+    investmentGrowthSinceInception: number;
+
+    // Annualized Returns
+    annualizedReturnYTD: number;
+    annualizedReturn1Y: number;
+    annualizedReturn3Y: number;
+    annualizedReturn5Y: number;
+    annualizedReturn10Y: number;
+    annualizedReturnSinceInception: number;
+
+    riskLevel: string;
+    benchmarkPerformance: number;
 }
 
 //#region

@@ -18,6 +18,9 @@ export class SelectReportsComponent implements OnInit {
     if (this.dataService.reportsList.length === 0) {
       this.fetchReportsList()
     };
+    if (this.dataService.templates.length === 0) {
+      this.fetchPresetsList()
+    }
   }
 
   @Output() childEvent = new EventEmitter<string>(); // Declaring EventEmitter
@@ -87,6 +90,18 @@ export class SelectReportsComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching reports:', error);
+      }
+    );
+  }
+
+  fetchPresetsList() {
+    this.dataService.getAllPresetsList().subscribe(
+      (data) => {
+        this.templates = data; // Store response in templates
+        this.dataService.templates = this.templates;
+      },
+      (error) => {
+        console.error('Error fetching templates:', error);
       }
     );
   }
