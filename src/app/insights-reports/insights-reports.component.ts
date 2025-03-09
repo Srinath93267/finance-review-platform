@@ -3,11 +3,12 @@ import { AppService, ReportsList } from '../app.service';
 import { CommonModule } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { PortfolioPerformanceComponent } from "./portfolio-performance/portfolio-performance.component";
+import { AssetAllocationComponent } from "./asset-allocation/asset-allocation.component";
 
 @Component({
   selector: 'app-insights-reports',
   standalone: true,
-  imports: [CommonModule, NgApexchartsModule, PortfolioPerformanceComponent],
+  imports: [CommonModule, NgApexchartsModule, PortfolioPerformanceComponent, AssetAllocationComponent],
   templateUrl: './insights-reports.component.html',
   styleUrl: './insights-reports.component.css'
 })
