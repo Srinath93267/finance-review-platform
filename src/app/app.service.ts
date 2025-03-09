@@ -17,6 +17,7 @@ export class AppService {
     private CREATEPRESET: string = this.baseUrl + "CreateNewPreset";
     private DELETEPRESET: string = this.baseUrl + "DeletePreset";
     private GETPORTFOLIOPERFORMANCEDATA: string = this.baseUrl + "GetPortfolioPerformanceData";
+    private GETASSETALLOCATIONDATA: string = this.baseUrl + "GetAssetAllocationData";
 
     public reportsList: ReportsList[] = [];
     public selectedReportsList: ReportsList[] = [];
@@ -63,6 +64,15 @@ export class AppService {
             'ACCOUNT': Account
         });
         return this.http.get<PortfolioPerformance>(this.GETPORTFOLIOPERFORMANCEDATA, { headers });
+    }
+
+    getAssetAllocationData(Account: number) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+            'ACCOUNT': Account
+        });
+        return this.http.get<AssetAllocation>(this.GETASSETALLOCATIONDATA, { headers });
     }
 }
 
@@ -113,6 +123,27 @@ export interface PortfolioPerformance {
 
     riskLevel: string;
     benchmarkPerformance: number;
+}
+
+export interface AssetAllocation {
+    AllocationID: number;
+    AccountNumber: number;
+    ClientName: string;
+    AssetClass: string[];
+    AllocationPercentage: number[];
+    MarketValue: number[];
+    ExpectedReturnPercentage: number[];
+    HistoricalPerformance3Y: number[];
+    HistoricalPerformance5Y: number[];
+    VolatilityRiskLevel: string[];
+    TargetAllocationPercentage: number[];
+    DeviationFromTarget: number[];
+    RebalancingRequired: boolean[];
+    LiquidityLevel: string[];
+    MaturityDate: Date[];
+    DividendYield: number[];
+    AdvisorNotes: string[];
+    CurrencyType: string[];
 }
 
 //#region
