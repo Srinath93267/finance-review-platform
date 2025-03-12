@@ -13,7 +13,7 @@ import { AppService, PortfolioPerformance } from '../../app.service';
 export class PortfolioPerformanceComponent implements OnInit {
 
   ngOnInit() {
-    this.appService.getPortfolioPerformanceData(123456).subscribe(
+    this.appService.getPortfolioPerformanceData(34567890).subscribe(
       (data) => {
         this.portforlioPerformanceData = data;
         this.setPortfolioPerformanceData();

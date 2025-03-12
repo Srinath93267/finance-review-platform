@@ -126,24 +126,24 @@ export interface PortfolioPerformance {
 }
 
 export interface AssetAllocation {
-    AllocationID: number;
-    AccountNumber: number;
-    ClientName: string;
-    AssetClass: string[];
-    AllocationPercentage: number[];
-    MarketValue: number[];
-    ExpectedReturnPercentage: number[];
-    HistoricalPerformance3Y: number[];
-    HistoricalPerformance5Y: number[];
-    VolatilityRiskLevel: string[];
-    TargetAllocationPercentage: number[];
-    DeviationFromTarget: number[];
-    RebalancingRequired: boolean[];
-    LiquidityLevel: string[];
-    MaturityDate: Date[];
-    DividendYield: number[];
-    AdvisorNotes: string[];
-    CurrencyType: string[];
+    allocationID: number;
+    accountNumber: number;
+    clientName: string;
+    assetClass: string[];
+    allocationPercentage: number[];
+    marketValue: number[];
+    expectedReturnPercentage: number[];
+    historicalPerformance3Y: number[];
+    historicalPerformance5Y: number[];
+    volatilityRiskLevel: string[];
+    targetAllocationPercentage: number[];
+    deviationFromTarget: number[];
+    rebalancingRequired: boolean[];
+    liquidityLevel: string[];
+    maturityDate: Date[];
+    aividendYield: number[];
+    advisorNotes: string[];
+    currencyType: string[];
 }
 
 //#region
