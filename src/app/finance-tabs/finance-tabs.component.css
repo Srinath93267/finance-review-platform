@@ -1,3 +1,9 @@
 li{
     cursor: pointer;
 }
+
+.account-table
+{
+    height:350px;
+    overflow-y: scroll;
+}

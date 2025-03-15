@@ -1,18 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportHistoryComponent } from "../report-history/report-history.component";
 import { CommonModule } from "@angular/common";
 import { InsightsReportsComponent } from "../insights-reports/insights-reports.component";
 import { GenerateReportComponent } from "../generate-report/generate-report.component";
 import { PresetsComponent } from "../presets/presets.component";
+import { AppService, Account } from '../app.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-finance-tabs',
   standalone: true,
-  imports: [ReportHistoryComponent, CommonModule, InsightsReportsComponent, GenerateReportComponent, PresetsComponent],
+  imports: [ReportHistoryComponent, CommonModule, InsightsReportsComponent, GenerateReportComponent, PresetsComponent, FormsModule],
   templateUrl: './finance-tabs.component.html',
   styleUrl: './finance-tabs.component.css'
 })
-export class FinanceTabsComponent {
+export class FinanceTabsComponent implements OnInit {
+
+  ngOnInit(): void {
+    if (this.appService.AccountSet.accountNumber == 0 && this.appService.AccountSet.clientName == "") {
+      this.fetchAccounts();
+    }
+  }
+
+  constructor(private appService: AppService) { }
 
   Tabs: string[] = ["Report History", "Reports Insights", "Generate a Report", "Presets", "Settings"];
   selectedTab = this.Tabs[0];
@@ -22,8 +32,37 @@ export class FinanceTabsComponent {
 
   selectedItem: number | null = 0;
 
+  AccountSet: Account = { accountNumber: 0, clientName: "" };
+  Accounts: Account[] = [];
+  searchAccounts: boolean = false;
+
+  accountSearch: string = '';
+
   selectItem(index: number) {
     this.selectedItem = index;
     this.selectedTab = this.Tabs[index];
+  }
+
+  fetchAccounts() {
+    this.appService.getAccounts().subscribe(data => {
+      this.Accounts = data;
+      this.appService.AccountSet = data[0];
+      this.AccountSet = this.appService.AccountSet;
+    })
+  }
+
+  selectAccount(Account: Account) {
+    this.appService.AccountSet = Account;
+    this.AccountSet = Account;
+    this.searchAccounts = false;
+    this.appService.updateAccount(this.AccountSet.accountNumber);
+  }
+
+  get filteredAccounts() {
+    return this.Accounts.filter(row =>
+      Object.values(row).some(val =>
+        val.toString().toLowerCase().includes(this.accountSearch.toLowerCase())
+      )
+    );
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -12,7 +12,8 @@ export class AppService {
 
     private baseUrl: string = environment.baseUrl;
     private API_KEY: string = environment.apiSecretKey;
-    private GETALLREPORTSLIST: string = this.baseUrl + "GetAllReportsList";
+    private GETACCOUNTS: string = this.baseUrl + "GetAccounts";
+    private GETALLREPORTSLIST: string = this.baseUrl + "GetAllReportsList";    
     private GETALLPRESETSLIST: string = this.baseUrl + "GetAllPresetsList";
     private CREATEPRESET: string = this.baseUrl + "CreateNewPreset";
     private DELETEPRESET: string = this.baseUrl + "DeletePreset";
@@ -24,6 +25,21 @@ export class AppService {
     public selectedTemplate: number = 0;
     public templates: Preset[] = [];
     public flow: Reportflow[] = [{ name: "Select Reports", selected: true }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: false }]
+    public AccountSet:Account = {accountNumber: 0, clientName: ""};  
+    private accountSubject = new BehaviorSubject<number>(this.AccountSet.accountNumber);
+    account = this.accountSubject.asObservable();
+
+    getAccounts(): Observable<Account[]> {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        return this.http.get<Account[]>(this.GETACCOUNTS, { headers });
+    }
+
+    updateAccount(changedAccount: number) {
+        this.accountSubject.next(changedAccount);
+    }
 
     getAllReportsList(): Observable<ReportsList[]> {
         const headers = new HttpHeaders({
@@ -58,6 +74,7 @@ export class AppService {
     }
 
     getPortfolioPerformanceData(Account: number) {
+        console.log(Account);
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
@@ -74,6 +91,11 @@ export class AppService {
         });
         return this.http.get<AssetAllocation>(this.GETASSETALLOCATIONDATA, { headers });
     }
+}
+
+export interface Account {
+    accountNumber: number;
+    clientName: string;
 }
 
 export interface Reportflow {
@@ -141,7 +163,7 @@ export interface AssetAllocation {
     rebalancingRequired: boolean[];
     liquidityLevel: string[];
     maturityDate: Date[];
-    aividendYield: number[];
+    dividendYield: number[];
     advisorNotes: string[];
     currencyType: string[];
 }

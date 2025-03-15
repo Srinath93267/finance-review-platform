@@ -13,12 +13,22 @@ import { AppService, PortfolioPerformance } from '../../app.service';
 export class PortfolioPerformanceComponent implements OnInit {
 
   ngOnInit() {
-    this.appService.getPortfolioPerformanceData(34567890).subscribe(
-      (data) => {
-        this.portforlioPerformanceData = data;
-        this.setPortfolioPerformanceData();
-      }
-    );
+    if (this.appService.AccountSet.accountNumber != 0) {
+      this.appService.getPortfolioPerformanceData(this.appService.AccountSet.accountNumber).subscribe(
+        (data) => {
+          this.portforlioPerformanceData = data;
+          this.setPortfolioPerformanceData();
+        }
+      );
+      this.appService.account.subscribe(updatedData => {
+        this.appService.getPortfolioPerformanceData(updatedData).subscribe(
+          (data) => {
+            this.portforlioPerformanceData = data;
+            this.setPortfolioPerformanceData();
+          }
+        );
+      });
+    }
   }
 
   constructor(private appService: AppService) { }
