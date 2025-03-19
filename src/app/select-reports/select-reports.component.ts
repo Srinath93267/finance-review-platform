@@ -127,7 +127,7 @@ export class SelectReportsComponent implements OnInit {
         this.showReport = true;
         this.reportResponse = data;
         this.report = this.reportResponse.Report;
-        document.getElementById("pdf")?.setAttribute("src", this.report + "#toolbar=0&navpanes=0&scrollbar=0&view=FitP");
+        document.getElementById("pdf")?.setAttribute("src", this.report + "#toolbar=0&navpanes=0&scrollbar=0&view=FitH");
         const pdfElement = document.getElementById("pdf");
         if (pdfElement) {
           pdfElement.style.display = "block";
