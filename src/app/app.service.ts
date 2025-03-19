@@ -107,24 +107,21 @@ export class AppService {
     //#endregion
 
     //#region report services
-    getReport(Account: number, index: number)
-    {
-        if(index == 1)
-        {
+    getReport(Account: number, index: number) {
+        if (index == 1) {
             return this.getPortfolioPerformanceReport(Account);
         }
-        else if(index == 2)
-        {
+        else if (index == 2) {
             return this.getAssetAllocationReport(Account);
         }
-        else{
+        else {
             return this.getPortfolioPerformanceReport(Account);
         }
     }
     getPortfolioPerformanceReport(Account: number) {//'X-API-KEY': this.API_KEY,
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            
+
             'ACCOUNT': Account
         });
         return this.http.get(this.GETPORTFOLIOPERFORMANCEREPORT, { headers });

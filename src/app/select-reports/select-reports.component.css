@@ -6,12 +6,12 @@
     background: white;
     border-radius: 4px;
     overflow: hidden;
-    
+
 }
 
 #selectedReports {
     max-width: 100%;
-    height:37.5rem;
+    height: 37.5rem;
 }
 
 .example-box {
@@ -53,24 +53,22 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-#showReportAlreadyAdded{
+#showReportAlreadyAdded {
     position: fixed;
-    top:0;
-    right:0;
-    margin-top:0.2in;
-    margin-right:0.2in;
+    top: 0;
+    right: 0;
+    margin-top: 0.2in;
+    margin-right: 0.2in;
 }
 
-#pdf
-{
-    display:none;
+#pdf {
+    display: none;
     position: relative;
 }
 
-#spinner
-{
+#spinner {
     display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 600px;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
 }

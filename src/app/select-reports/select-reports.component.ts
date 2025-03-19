@@ -44,7 +44,7 @@ export class SelectReportsComponent implements OnInit {
   selectedTemplate: number = this.dataService.selectedTemplate;
 
   reportResponse: any = {};
-  report:string=""
+  report: string = ""
 
   showReport: boolean = false;
 
@@ -115,8 +115,7 @@ export class SelectReportsComponent implements OnInit {
     );
   }
 
-  getReport()
-  {
+  getReport() {
     const pdfElement = document.getElementById("pdf");
     if (pdfElement) {
       pdfElement.style.display = "none";
@@ -128,7 +127,7 @@ export class SelectReportsComponent implements OnInit {
         this.showReport = true;
         this.reportResponse = data;
         this.report = this.reportResponse.Report;
-        document.getElementById("pdf")?.setAttribute("src", this.report +"#toolbar=0&navpanes=0&scrollbar=0&view=FitP");
+        document.getElementById("pdf")?.setAttribute("src", this.report + "#toolbar=0&navpanes=0&scrollbar=0&view=FitP");
         const pdfElement = document.getElementById("pdf");
         if (pdfElement) {
           pdfElement.style.display = "block";
