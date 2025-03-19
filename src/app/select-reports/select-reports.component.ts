@@ -16,11 +16,14 @@ export class SelectReportsComponent implements OnInit {
 
   ngOnInit() {
     if (this.dataService.reportsList.length === 0) {
-      this.fetchReportsList()
+      this.fetchReportsList();
     };
     if (this.dataService.templates.length === 0) {
-      this.fetchPresetsList()
+      this.fetchPresetsList();
     }
+    this.dataService.account.subscribe(updatedData => {
+      this.getReport();
+    });
   }
 
   @Output() childEvent = new EventEmitter<string>(); // Declaring EventEmitter
@@ -40,6 +43,11 @@ export class SelectReportsComponent implements OnInit {
   showReportAlreadyAdded: boolean = false;
   selectedTemplate: number = this.dataService.selectedTemplate;
 
+  reportResponse: any = {};
+  report:string=""
+
+  showReport: boolean = false;
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.dataService.selectedReportsList, event.previousIndex, event.currentIndex);
     this.selectedReportsList = this.dataService.selectedReportsList;
@@ -48,6 +56,7 @@ export class SelectReportsComponent implements OnInit {
   selectReport(index: number, id: number) {
     this.selectedIndex = index;
     this.selectedReport = id;
+    this.getReport();
   }
 
   AddtoReportList() {
@@ -102,6 +111,31 @@ export class SelectReportsComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching templates:', error);
+      }
+    );
+  }
+
+  getReport()
+  {
+    const pdfElement = document.getElementById("pdf");
+    if (pdfElement) {
+      pdfElement.style.display = "none";
+    }
+    this.showReport = false;
+    const account = this.dataService.AccountSet.accountNumber;
+    this.dataService.getReport(account, this.selectedReport).subscribe(
+      (data) => {
+        this.showReport = true;
+        this.reportResponse = data;
+        this.report = this.reportResponse.Report;
+        document.getElementById("pdf")?.setAttribute("src", this.report +"#toolbar=0&navpanes=0&scrollbar=0&view=FitP");
+        const pdfElement = document.getElementById("pdf");
+        if (pdfElement) {
+          pdfElement.style.display = "block";
+        }
+      },
+      (error) => {
+        console.error('Error fetching report:', error);
       }
     );
   }

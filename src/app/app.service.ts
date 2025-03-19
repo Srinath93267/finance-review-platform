@@ -10,25 +10,38 @@ export class AppService {
 
     constructor(private http: HttpClient) { }
 
+    //#region private variables
     private baseUrl: string = environment.baseUrl;
+    private baseUrl2: string = "http://localhost:3000/";
+
+    //#region Data API Endpoints
     private API_KEY: string = environment.apiSecretKey;
     private GETACCOUNTS: string = this.baseUrl + "GetAccounts";
-    private GETALLREPORTSLIST: string = this.baseUrl + "GetAllReportsList";    
+    private GETALLREPORTSLIST: string = this.baseUrl + "GetAllReportsList";
     private GETALLPRESETSLIST: string = this.baseUrl + "GetAllPresetsList";
     private CREATEPRESET: string = this.baseUrl + "CreateNewPreset";
     private DELETEPRESET: string = this.baseUrl + "DeletePreset";
     private GETPORTFOLIOPERFORMANCEDATA: string = this.baseUrl + "GetPortfolioPerformanceData";
     private GETASSETALLOCATIONDATA: string = this.baseUrl + "GetAssetAllocationData";
+    //#endregion
+
+    //#region Report API Endpoints
+    private GETPORTFOLIOPERFORMANCEREPORT: string = this.baseUrl2 + "GetPortfolioPerformanceReport";
+    private GETASSETALLOCATIONREPORT: string = this.baseUrl2 + "GetAssetAllocationReport";
+    //#endregion
+    //#endregion
 
     public reportsList: ReportsList[] = [];
     public selectedReportsList: ReportsList[] = [];
     public selectedTemplate: number = 0;
     public templates: Preset[] = [];
     public flow: Reportflow[] = [{ name: "Select Reports", selected: true }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: false }]
-    public AccountSet:Account = {accountNumber: 0, clientName: ""};  
+    public AccountSet: Account = { accountNumber: 0, clientName: "" };
     private accountSubject = new BehaviorSubject<number>(this.AccountSet.accountNumber);
     account = this.accountSubject.asObservable();
 
+
+    //#region data services
     getAccounts(): Observable<Account[]> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -91,6 +104,43 @@ export class AppService {
         });
         return this.http.get<AssetAllocation>(this.GETASSETALLOCATIONDATA, { headers });
     }
+    //#endregion
+
+    //#region report services
+    getReport(Account: number, index: number)
+    {
+        if(index == 1)
+        {
+            return this.getPortfolioPerformanceReport(Account);
+        }
+        else if(index == 2)
+        {
+            return this.getAssetAllocationReport(Account);
+        }
+        else{
+            return this.getPortfolioPerformanceReport(Account);
+        }
+    }
+    getPortfolioPerformanceReport(Account: number) {//'X-API-KEY': this.API_KEY,
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            
+            'ACCOUNT': Account
+        });
+        return this.http.get(this.GETPORTFOLIOPERFORMANCEREPORT, { headers });
+    }
+
+    getAssetAllocationReport(Account: number) {//'X-API-KEY': this.API_KEY,
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+
+            'ACCOUNT': Account
+        });
+        return this.http.get(this.GETASSETALLOCATIONREPORT, { headers });
+    }
+
+
+    //#endregion
 }
 
 export interface Account {

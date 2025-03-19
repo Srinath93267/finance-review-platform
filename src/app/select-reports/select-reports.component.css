@@ -1,5 +1,4 @@
 .example-list {
-    width: 420px;
     max-width: 100%;
     border: solid 1px #ccc;
     min-height: 60px;
@@ -11,7 +10,6 @@
 }
 
 #selectedReports {
-    width: 420px;
     max-width: 100%;
     height:37.5rem;
 }
@@ -61,4 +59,18 @@
     right:0;
     margin-top:0.2in;
     margin-right:0.2in;
+}
+
+#pdf
+{
+    display:none;
+    position: relative;
+}
+
+#spinner
+{
+    display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 600px;
 }
