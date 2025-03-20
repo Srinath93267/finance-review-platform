@@ -4,6 +4,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'flowbite';
 @source "../node_modules/flowbite-datepicker";
 body {
     font-family: 'Inter', sans-serif;
