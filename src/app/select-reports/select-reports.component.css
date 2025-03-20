@@ -64,11 +64,13 @@
 #pdf {
     display: none;
     position: relative;
+    border: none;
 }
 
 #spinner {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 600px;
+    height: 604px;
+    background-color: #ccc;
 }

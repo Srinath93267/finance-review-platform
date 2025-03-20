@@ -4,7 +4,7 @@
     height:fit-content;
 }
 
-#showTemplateErrorMessage {
+#showTemplateErrorMessage, #showPresetCreated {
     position: fixed;
     top: 0;
     right: 0;

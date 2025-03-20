@@ -15,31 +15,41 @@ export class ReadyReportsComponent {
       account: 56789012,
       accountHolder: "Rajesh Sharma",
       reportName: "Portfolio Performance Report",
-      dateOfProcess: new Date("2025-01-30")
+      presetUsed:"",
+      dateOfProcess: new Date("2025-01-30").toLocaleDateString("en-GB"),
+      mailSent:false
     },
     {
       account: 23456789,
       accountHolder: "Priya Iyer",
       reportName: "Asset Allocation Report",
-      dateOfProcess: new Date("2025-01-29")
+      presetUsed: "Preset 1",
+      dateOfProcess: new Date("2025-01-29").toLocaleDateString("en-GB"),
+      mailSent: true
     },
     {
       account: 67890123,
       accountHolder: "Anil Verma",
       reportName: "Risk Analysis Report",
-      dateOfProcess: new Date("2025-01-28")
+      presetUsed: "Preset 4",
+      dateOfProcess: new Date("2025-01-28").toLocaleDateString("en-GB"),
+      mailSent: false
     },
     {
       account: 89012345,
       accountHolder: "Kavita Nair",
       reportName: "Investment Projection Report",
-      dateOfProcess: new Date("2025-01-27")
+      presetUsed: "",
+      dateOfProcess: new Date("2025-01-27").toLocaleDateString("en-GB"),
+      mailSent: true
     },
     {
       account: 34567890,
       accountHolder: "Sandeep Menon",
       reportName: "Tax Impact Report",
-      dateOfProcess: new Date("2025-01-26")
+      presetUsed: "Preset 2",
+      dateOfProcess: new Date("2025-01-26").toLocaleDateString("en-GB"),
+      mailSent: false
     }
   ];
 
@@ -49,5 +59,7 @@ export interface Reports {
   account: number;
   accountHolder: string;
   reportName: string;
-  dateOfProcess: Date;
+  dateOfProcess: string;
+  presetUsed:string,
+  mailSent:boolean
 }

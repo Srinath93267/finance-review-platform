@@ -4,6 +4,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@source "../node_modules/flowbite-datepicker";
 body {
     font-family: 'Inter', sans-serif;
+}
+
+thead {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }

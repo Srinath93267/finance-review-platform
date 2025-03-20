@@ -34,8 +34,9 @@ export class AppService {
     public reportsList: ReportsList[] = [];
     public selectedReportsList: ReportsList[] = [];
     public selectedTemplate: number = 0;
+    public selectedTemplateName: string = '';
     public templates: Preset[] = [];
-    public flow: Reportflow[] = [{ name: "Select Reports", selected: true }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: false }]
+    public flow: Reportflow[] = [{ name: "Select Reports", selected: false }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: true }]
     public AccountSet: Account = { accountNumber: 0, clientName: "" };
     private accountSubject = new BehaviorSubject<number>(this.AccountSet.accountNumber);
     account = this.accountSubject.asObservable();

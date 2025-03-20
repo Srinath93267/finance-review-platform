@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-review-submit',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './review-submit.component.css'
 })
 export class ReviewSubmitComponent {
-
+  @Output() childEvent = new EventEmitter<string>(); // Declaring EventEmitter
 }

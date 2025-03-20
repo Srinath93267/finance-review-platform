@@ -27,6 +27,7 @@ export class PresetsComponent implements OnInit {
   NoTemplateNameErrorMessage = "Please provide a Name for the Preset name.";
   NoReportSelecedforTemplateErrorMessage = "Please select atleast two Reports for the Preset.";
   showTemplateErrorMessage: boolean = false;
+  showPresetCreated: boolean = false;
   constructor(private dataService: AppService, private fb: FormBuilder) { }
   showCreatePresetModal: boolean = false;
   PresetReportsList: PresetInfo[] = this.dataService.reportsList.map(details => ({
@@ -98,7 +99,17 @@ export class PresetsComponent implements OnInit {
 
   createPreset(presetName: string, selectedReports: ReportsList[]) {
     this.newPreset = { Name: presetName, Reports: selectedReports, CreatedBy: "" };
-    this.dataService.createPreset(this.newPreset).subscribe();
+    this.dataService.createPreset(this.newPreset).subscribe(data=>{
+      this.showPresetCreated = true;
+      setTimeout(() => {
+        this.showPresetCreated = false;
+      }, 3000);
+    },
+    (error)=>
+    {
+
+    }
+  );
   }
 }
 

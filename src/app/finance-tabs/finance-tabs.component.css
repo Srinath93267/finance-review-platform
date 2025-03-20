@@ -7,3 +7,8 @@ li{
     height:350px;
     overflow-y: scroll;
 }
+
+#badge
+{
+    border-radius: 6.5px;
+}

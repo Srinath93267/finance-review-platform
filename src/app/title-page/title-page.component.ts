@@ -14,4 +14,8 @@ export class TitlePageComponent {
   BackToSelectReport() {
     this.childEvent.emit('Select Reports');
   }
+
+  MoveToReviewandSubmitPage() {
+    this.childEvent.emit('Review and Submit');
+  }
 }

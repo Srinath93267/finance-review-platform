@@ -42,6 +42,7 @@ export class SelectReportsComponent implements OnInit {
   selectedReportsList: ReportsList[] = this.dataService.selectedReportsList;
   showReportAlreadyAdded: boolean = false;
   selectedTemplate: number = this.dataService.selectedTemplate;
+  selectedTemplateName=this.dataService.selectedTemplateName;
 
   reportResponse: any = {};
   report: string = ""
@@ -83,7 +84,9 @@ export class SelectReportsComponent implements OnInit {
   selectTemplate(value: any) {
     try {
       this.selectedTemplate = this.dataService.selectedTemplate = Number(value.target.value);
-      this.selectedReportsList = this.dataService.selectedReportsList = this.templates.filter(item => item.id === this.selectedTemplate)[0].reports;
+      this.selectedTemplateName = this.dataService.selectedTemplateName =this.templates.filter(template=>template.id===this.selectedTemplate)[0].name;
+      this.selectedReportsList = this.dataService.selectedReportsList = this.templates.
+      filter(item => item.id === this.selectedTemplate)[0].reports;
     }
     catch (err) {
       console.error(err);
@@ -119,6 +122,7 @@ export class SelectReportsComponent implements OnInit {
     const pdfElement = document.getElementById("pdf");
     if (pdfElement) {
       pdfElement.style.display = "none";
+      pdfElement.removeAttribute("src");
     }
     this.showReport = false;
     const account = this.dataService.AccountSet.accountNumber;

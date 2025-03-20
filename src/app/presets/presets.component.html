@@ -1,6 +1,9 @@
-<div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert" id="showTemplateErrorMessage" *ngIf="showTemplateErrorMessage===true">
+<div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert" id="showTemplateErrorMessage" *ngIf="this.showTemplateErrorMessage===true">
     <!-- <span class="font-medium">Danger alert!</span> Change a few things up and try submitting again. -->
      {{ErrorMessage}}
+</div>
+<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert" id="showPresetCreated" *ngIf="this.showPresetCreated===true">
+    Preset <span class="font-medium">{{this.newPreset.Name}}</span> has been created successfully.
 </div>
 <!-- Modal toggle -->
 <button type="button" data-modal-target="static-modal" data-modal-toggle="static-modal"
