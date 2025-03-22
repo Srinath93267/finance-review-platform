@@ -13,18 +13,10 @@ export class ReadyReportsComponent implements OnInit {
 
   @Input() AccountSet: any;
 
-  ngOnInit() {
-    // this.appService.account.subscribe(updatedData => {
-    //   this.account = this.appService.AccountSet.accountNumber;
-    //   if (this.appService.AccountSet.accountNumber !== 0 && this.appService.AccountSet.clientName !== "") {
-    //     this.fetchFinalReports();
-    //   }
-    // });
-  }
+  ngOnInit() { }
   fetchFinalReports() {
     this.appService.getFinalReportsByAccount(this.account).subscribe(data => {
       this.Reports = data;
-      console.log(data);
     });
   }
 
@@ -33,7 +25,7 @@ export class ReadyReportsComponent implements OnInit {
     if (this.appService.AccountSet.accountNumber !== 0 && this.appService.AccountSet.clientName !== "") {
       this.fetchFinalReports();
     }
-   }
+  }
 
   constructor(private appService: AppService) { }
 
