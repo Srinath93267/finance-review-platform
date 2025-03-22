@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from "@angular/common";
+import { AppService, FinalReport } from '../app.service';
 
 @Component({
   selector: 'app-ready-reports',
@@ -8,58 +9,36 @@ import { CommonModule } from "@angular/common";
   templateUrl: './ready-reports.component.html',
   styleUrl: './ready-reports.component.css'
 })
-export class ReadyReportsComponent {
+export class ReadyReportsComponent implements OnInit {
 
-  Reports: Reports[] = [
-    {
-      account: 56789012,
-      accountHolder: "Rajesh Sharma",
-      reportName: "Portfolio Performance Report",
-      presetUsed:"",
-      dateOfProcess: new Date("2025-01-30").toLocaleDateString("en-GB"),
-      mailSent:false
-    },
-    {
-      account: 23456789,
-      accountHolder: "Priya Iyer",
-      reportName: "Asset Allocation Report",
-      presetUsed: "Preset 1",
-      dateOfProcess: new Date("2025-01-29").toLocaleDateString("en-GB"),
-      mailSent: true
-    },
-    {
-      account: 67890123,
-      accountHolder: "Anil Verma",
-      reportName: "Risk Analysis Report",
-      presetUsed: "Preset 4",
-      dateOfProcess: new Date("2025-01-28").toLocaleDateString("en-GB"),
-      mailSent: false
-    },
-    {
-      account: 89012345,
-      accountHolder: "Kavita Nair",
-      reportName: "Investment Projection Report",
-      presetUsed: "",
-      dateOfProcess: new Date("2025-01-27").toLocaleDateString("en-GB"),
-      mailSent: true
-    },
-    {
-      account: 34567890,
-      accountHolder: "Sandeep Menon",
-      reportName: "Tax Impact Report",
-      presetUsed: "Preset 2",
-      dateOfProcess: new Date("2025-01-26").toLocaleDateString("en-GB"),
-      mailSent: false
+  @Input() AccountSet: any;
+
+  ngOnInit() {
+    // this.appService.account.subscribe(updatedData => {
+    //   this.account = this.appService.AccountSet.accountNumber;
+    //   if (this.appService.AccountSet.accountNumber !== 0 && this.appService.AccountSet.clientName !== "") {
+    //     this.fetchFinalReports();
+    //   }
+    // });
+  }
+  fetchFinalReports() {
+    this.appService.getFinalReportsByAccount(this.account).subscribe(data => {
+      this.Reports = data;
+      console.log(data);
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.account = this.appService.AccountSet.accountNumber;
+    if (this.appService.AccountSet.accountNumber !== 0 && this.appService.AccountSet.clientName !== "") {
+      this.fetchFinalReports();
     }
-  ];
+   }
 
-}
+  constructor(private appService: AppService) { }
 
-export interface Reports {
-  account: number;
-  accountHolder: string;
-  reportName: string;
-  dateOfProcess: string;
-  presetUsed:string,
-  mailSent:boolean
+  Reports: FinalReport[] = [];
+
+  account: number = 0;
+
 }

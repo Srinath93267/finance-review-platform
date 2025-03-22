@@ -23,6 +23,7 @@ export class AppService {
     private DELETEPRESET: string = this.baseUrl + "DeletePreset";
     private GETPORTFOLIOPERFORMANCEDATA: string = this.baseUrl + "GetPortfolioPerformanceData";
     private GETASSETALLOCATIONDATA: string = this.baseUrl + "GetAssetAllocationData";
+    private GETFINALREPORTSBYACCOUNT: string = this.baseUrl + "GetFinalReportsByAccount";
     //#endregion
 
     //#region Report API Endpoints
@@ -36,10 +37,13 @@ export class AppService {
     public selectedTemplate: number = 0;
     public selectedTemplateName: string = '';
     public templates: Preset[] = [];
-    public flow: Reportflow[] = [{ name: "Select Reports", selected: false }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: true }]
+    public flow: Reportflow[] = [{ name: "Select Reports", selected: true }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: false }]
     public AccountSet: Account = { accountNumber: 0, clientName: "" };
     private accountSubject = new BehaviorSubject<number>(this.AccountSet.accountNumber);
     account = this.accountSubject.asObservable();
+    public isAppOnLoad: boolean = true;
+    private isAppLoadSubject = new BehaviorSubject<boolean>(this.isAppOnLoad);
+    isAppLoadObserver = this.isAppLoadSubject.asObservable();
 
 
     //#region data services
@@ -48,7 +52,7 @@ export class AppService {
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
         });
-        return this.http.get<Account[]>(this.GETACCOUNTS, { headers });
+        return this.http.get<Account[]>(this.GETACCOUNTS, { headers });;
     }
 
     updateAccount(changedAccount: number) {
@@ -88,7 +92,6 @@ export class AppService {
     }
 
     getPortfolioPerformanceData(Account: number) {
-        console.log(Account);
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
@@ -105,6 +108,17 @@ export class AppService {
         });
         return this.http.get<AssetAllocation>(this.GETASSETALLOCATIONDATA, { headers });
     }
+
+    getFinalReportsByAccount(Account: number): Observable<FinalReport[]> {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+            'ACCOUNT': Account
+        });
+        console.log(headers);
+        return this.http.get<FinalReport[]>(this.GETFINALREPORTSBYACCOUNT, { headers });;
+    }
+
     //#endregion
 
     //#region report services
@@ -141,6 +155,7 @@ export class AppService {
     //#endregion
 }
 
+//#region Interfaces
 export interface Account {
     accountNumber: number;
     clientName: string;
@@ -215,6 +230,21 @@ export interface AssetAllocation {
     advisorNotes: string[];
     currencyType: string[];
 }
+
+export interface FinalReport {
+    finalReportID: number;
+    accountNumber: number;
+    reportTitle: string;
+    reportPdf: string;
+    reportDate: string;
+    presetID: number
+    createdBy: string;
+    statusCd: number;
+    reportIDs: string;
+    createdOn: string;
+    lastUpdatedOn: string;
+}
+//#endregion
 
 //#region
 //private data: any = {}; // Store shared data

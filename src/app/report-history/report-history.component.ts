@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ReadyReportsComponent } from "../ready-reports/ready-reports.component";
 import { ReportQueueComponent } from "../report-queue/report-queue.component";
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './report-history.component.html',
   styleUrl: './report-history.component.css'
 })
-export class ReportHistoryComponent {
+export class ReportHistoryComponent implements OnChanges {
+
+  @Input() AccountSet: any;
+
   readyReports_Tab: boolean = false;
   reportQueue_Tab: boolean = true;
+
+  ngOnChanges(changes: SimpleChanges): void { }
 }

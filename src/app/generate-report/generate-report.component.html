@@ -16,4 +16,4 @@
 </ol>
 <app-select-reports (childEvent)="receiveFlow($event)" *ngIf="this.flow[0].selected===true"/>
 <app-title-page (childEvent)="receiveFlow($event)" *ngIf="this.flow[1].selected===true"/>
-<app-review-submit *ngIf="this.flow[2].selected===true"/>
+<app-review-submit (childEvent)="receiveFlow($event)" *ngIf="this.flow[2].selected===true"/>

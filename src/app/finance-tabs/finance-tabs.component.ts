@@ -48,7 +48,7 @@ export class FinanceTabsComponent implements OnInit {
       this.Accounts = data;
       this.appService.AccountSet = data[0];
       this.AccountSet = this.appService.AccountSet;
-    })
+    });
   }
 
   selectAccount(Account: Account) {

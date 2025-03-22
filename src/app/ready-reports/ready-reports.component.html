@@ -65,24 +65,25 @@
                 </td>
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     <!-- {{report.account}} -->
-                    {{report.accountHolder}}
+                    <!-- {{report.accountHolder}} -->
                 </th>
                 <!-- <td class="px-6 py-4">
                     {{report.accountHolder}}
                 </td> -->
                 <td class="px-6 py-4">
-                    {{report.reportName}}
+                    {{report.reportTitle}}
                 </td>
                 <td class="px-6 py-4">
-                    {{report.dateOfProcess}}
+                    {{report.reportDate}}
                 </td>
                 <td class="px-6 py-4">
-                    <div *ngIf="report.presetUsed!==''">
+                    <!-- <div *ngIf="report.presetUsed!==''">
                         {{report.presetUsed}}
                     </div>
                     <div *ngIf="report.presetUsed===''" class="ml-5">
                         -
-                    </div>
+                    </div> -->
+                    -
                 </td>
                 <td class="px-6 py-4">
                     <a type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
@@ -97,8 +98,8 @@
                 </td>
                 <td class="px-6 py-4">
                     <a type="button" class="font-medium text-yellow-300 hover:underline">
-                        <svg class="w-6 h-6 text-yellow-300 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-yellow-300 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
                         </svg>
@@ -106,8 +107,8 @@
                 </td>
                 <td class="px-6 py-4">
                     <a type="button" class="font-medium text-red-600 hover:underline">
-                        <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                         </svg>
@@ -115,16 +116,16 @@
                 </td>
                 <td class="px-6 py-4">
                     <a type="button" class="font-medium text-green-500 hover:underline">
-                        <svg *ngIf="!report.mailSent" class="w-6 h-6 text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m12 18-7 3 7-18 7 18-7-3Zm0 0v-5" />
                         </svg>
-                        <svg *ngIf="report.mailSent" class="w-6 h-6 text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" fill="none" viewBox="0 0 24 24">
+                        <!-- <svg class="w-6 h-6 text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M11 16v-5.5A3.5 3.5 0 0 0 7.5 7m3.5 9H4v-5.5A3.5 3.5 0 0 1 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1" />
-                        </svg>
+                        </svg> -->
                     </a>
                 </td>
             </tr>
