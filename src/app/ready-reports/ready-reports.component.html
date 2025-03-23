@@ -27,9 +27,9 @@
                 <!-- <th scope="col" class="px-6 py-3">
                     Account
                 </th> -->
-                <th scope="col" class="px-6 py-3">
+                <!-- <th scope="col" class="px-6 py-3">
                     Client Name
-                </th>
+                </th> -->
                 <th scope="col" class="px-6 py-3">
                     Report Name
                 </th>
@@ -63,27 +63,25 @@
                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                     </div>
                 </td>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <!-- {{report.account}} -->
-                    <!-- {{report.accountHolder}} -->
-                </th>
+                <!-- <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{report.clientName}}
+                </th> -->
                 <!-- <td class="px-6 py-4">
                     {{report.accountHolder}}
                 </td> -->
-                <td class="px-6 py-4">
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{report.reportTitle}}
                 </td>
                 <td class="px-6 py-4">
                     {{report.reportDate}}
                 </td>
                 <td class="px-6 py-4">
-                    <!-- <div *ngIf="report.presetUsed!==''">
-                        {{report.presetUsed}}
+                    <div *ngIf="report.presetID!==0">
+                        {{report.presetID}}
                     </div>
-                    <div *ngIf="report.presetUsed===''" class="ml-5">
+                    <div *ngIf="report.presetID===0" class="ml-5">
                         -
-                    </div> -->
-                    -
+                    </div>
                 </td>
                 <td class="px-6 py-4">
                     <a type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">

@@ -52,7 +52,7 @@ export class AppService {
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
         });
-        return this.http.get<Account[]>(this.GETACCOUNTS, { headers });;
+        return this.http.get<Account[]>(this.GETACCOUNTS, { headers });
     }
 
     updateAccount(changedAccount: number) {
@@ -115,8 +115,7 @@ export class AppService {
             'X-API-KEY': this.API_KEY,
             'ACCOUNT': Account
         });
-        console.log(headers);
-        return this.http.get<FinalReport[]>(this.GETFINALREPORTSBYACCOUNT, { headers });;
+        return this.http.get<FinalReport[]>(this.GETFINALREPORTSBYACCOUNT, { headers });
     }
 
     //#endregion
@@ -243,6 +242,7 @@ export interface FinalReport {
     reportIDs: string;
     createdOn: string;
     lastUpdatedOn: string;
+    clientName: string;
 }
 //#endregion
 

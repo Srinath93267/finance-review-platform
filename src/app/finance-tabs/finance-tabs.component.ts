@@ -46,9 +46,19 @@ export class FinanceTabsComponent implements OnInit {
   fetchAccounts() {
     this.appService.getAccounts().subscribe(data => {
       this.Accounts = data;
-      this.appService.AccountSet = data[0];
-      this.AccountSet = this.appService.AccountSet;
-    });
+      if (data && data.length > 0) {
+        this.appService.AccountSet = data[0];
+        this.AccountSet = this.appService.AccountSet;
+      }
+      else
+      {
+        console.error('No Accounts fetched.');
+      }
+    },
+      (error) => {
+        // console.error('Error fetching accounts: ', error);
+      }
+    );
   }
 
   selectAccount(Account: Account) {
