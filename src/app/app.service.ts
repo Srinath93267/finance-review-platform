@@ -243,6 +243,7 @@ export interface FinalReport {
     createdOn: string;
     lastUpdatedOn: string;
     clientName: string;
+    presetName: string;
 }
 //#endregion
 
