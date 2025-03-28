@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,8 @@ export class AppService {
     private DELETEPRESET: string = this.baseUrl + "DeletePreset";
     private GETPORTFOLIOPERFORMANCEDATA: string = this.baseUrl + "GetPortfolioPerformanceData";
     private GETASSETALLOCATIONDATA: string = this.baseUrl + "GetAssetAllocationData";
-    private GETFINALREPORTSBYACCOUNT: string = this.baseUrl + "GetFinalReportsByAccount";
+    private GETREADYREPORTSBYACCOUNT: string = this.baseUrl + "GetReadyReportsByAccount";
+    private GETQUEUEREPORTSBYACCOUNT: string = this.baseUrl + "GetQueueReportsByAccount";
     //#endregion
 
     //#region Report API Endpoints
@@ -109,15 +111,23 @@ export class AppService {
         return this.http.get<AssetAllocation>(this.GETASSETALLOCATIONDATA, { headers });
     }
 
-    getFinalReportsByAccount(Account: number): Observable<FinalReport[]> {
+    getReadyReportsByAccount(Account: number): Observable<FinalReport[]> {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
             'ACCOUNT': Account
         });
-        return this.http.get<FinalReport[]>(this.GETFINALREPORTSBYACCOUNT, { headers });
+        return this.http.get<FinalReport[]>(this.GETREADYREPORTSBYACCOUNT, { headers });
     }
 
+    getQueueReportsByAccount(Account: number): Observable<FinalReport[]> {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+            'ACCOUNT': Account
+        });
+        return this.http.get<FinalReport[]>(this.GETQUEUEREPORTSBYACCOUNT, { headers });
+    }
     //#endregion
 
     //#region report services
@@ -244,6 +254,7 @@ export interface FinalReport {
     lastUpdatedOn: string;
     clientName: string;
     presetName: string;
+    pdfUrl?: any;
 }
 //#endregion
 
