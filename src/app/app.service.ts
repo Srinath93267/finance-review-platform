@@ -256,6 +256,11 @@ export interface FinalReport {
     presetName: string;
     pdfUrl?: any;
 }
+
+export interface PresetInfo {
+    reports: ReportsList;
+    selected: boolean;
+}
 //#endregion
 
 //#region

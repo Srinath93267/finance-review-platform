@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AppService, ReportsList, NewPreset } from '../app.service';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { AppService, ReportsList, NewPreset, PresetInfo } from '../app.service';
+import { FormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { PresetListsComponent } from "../preset-lists/preset-lists.component";
 
 
@@ -99,21 +99,15 @@ export class PresetsComponent implements OnInit {
 
   createPreset(presetName: string, selectedReports: ReportsList[]) {
     this.newPreset = { Name: presetName, Reports: selectedReports, CreatedBy: "" };
-    this.dataService.createPreset(this.newPreset).subscribe(data=>{
+    this.dataService.createPreset(this.newPreset).subscribe(data => {
       this.showPresetCreated = true;
       setTimeout(() => {
         this.showPresetCreated = false;
       }, 3000);
     },
-    (error)=>
-    {
+      (error) => {
 
-    }
-  );
+      }
+    );
   }
-}
-
-export interface PresetInfo {
-  reports: ReportsList;
-  selected: boolean;
 }

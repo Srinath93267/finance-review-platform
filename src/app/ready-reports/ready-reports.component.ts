@@ -28,7 +28,6 @@ export class ReadyReportsComponent implements OnInit {
     this.appService.getReadyReportsByAccount(this.account).subscribe(data => {
       this.Reports = data as FinalReport[];
       this.Reports.forEach(report => report.pdfUrl = this.GetPDFUrl(report.reportPdf));
-      console.log(this.Reports);
     });
   }
 
