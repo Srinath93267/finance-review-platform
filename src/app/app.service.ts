@@ -26,6 +26,7 @@ export class AppService {
     private GETASSETALLOCATIONDATA: string = this.baseUrl + "GetAssetAllocationData";
     private GETREADYREPORTSBYACCOUNT: string = this.baseUrl + "GetReadyReportsByAccount";
     private GETQUEUEREPORTSBYACCOUNT: string = this.baseUrl + "GetQueueReportsByAccount";
+    private UPDATEPRESETBYPRESETID: string = this.baseUrl + "UpdatePreset";
     //#endregion
 
     //#region Report API Endpoints
@@ -127,6 +128,15 @@ export class AppService {
             'ACCOUNT': Account
         });
         return this.http.get<FinalReport[]>(this.GETQUEUEREPORTSBYACCOUNT, { headers });
+    }
+
+    updatePreset(id: number, newSelectReports: PresetInfo[], removedSelectReports: PresetInfo[]) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        const updatePreset = { PresetId: id, NewSelectedReports: newSelectReports, RemovedSelectedReports: removedSelectReports };
+        return this.http.patch(this.UPDATEPRESETBYPRESETID, updatePreset, { headers });
     }
     //#endregion
 

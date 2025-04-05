@@ -16,14 +16,11 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'finance-review-platform';
-  isLoading = false;
   
   constructor(public router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
     if (isPlatformBrowser(this.platformId)) initFlowbite();
-    this.isLoading = false;
   }
   
 }

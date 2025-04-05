@@ -68,11 +68,12 @@ export class PresetListsComponent implements OnInit {
     this.selectAll = this.reportList2.every(row => row.selected);
   }
 
-  updatePreset() {
+  async updatePreset() {
     if (JSON.stringify(this.reportList2) !== JSON.stringify(this.reportList3)) {
       const alreadySelectedReportIds = new Set(this.presetsReports.map(item => item.id));
       const newSelectReports = this.reportList2.filter(item => item.selected === true && alreadySelectedReportIds.has(item.reports.id) === false);
       const removedSelectReports = this.reportList2.filter(item => item.selected === false && alreadySelectedReportIds.has(item.reports.id) === true);
+      await this.callUpdatePreset(this.presets.filter(item => item.name === this.modalTemplateName)[0].id, newSelectReports, removedSelectReports);
       this.editPresetReports = !this.editPresetReports;
       this.reset();
     }
@@ -94,6 +95,10 @@ export class PresetListsComponent implements OnInit {
         this.dataService.templates = this.dataService.templates.filter(preset => preset.id != id);
       }
     );
+  }
+
+  async callUpdatePreset(id: number, newSelectReports: PresetInfo[], removedSelectReports: PresetInfo[]) {
+    await this.dataService.updatePreset(id, newSelectReports, removedSelectReports).subscribe();
   }
 
   fetchPresetsList() {

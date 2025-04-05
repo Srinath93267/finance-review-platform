@@ -35,6 +35,7 @@ export class FinanceTabsComponent implements OnInit {
   AccountSet: Account = { accountNumber: 0, clientName: "" };
   Accounts: Account[] = [];
   searchAccounts: boolean = false;
+  isLoading:boolean=false;
 
   accountSearch: string = '';
 
@@ -44,11 +45,13 @@ export class FinanceTabsComponent implements OnInit {
   }
 
   fetchAccounts() {
+    this.isLoading=true;
     this.appService.getAccounts().subscribe(data => {
       this.Accounts = data;
       if (data && data.length > 0) {
         this.appService.AccountSet = data[0];
         this.AccountSet = this.appService.AccountSet;
+        this.isLoading=false;
       }
       else
       {

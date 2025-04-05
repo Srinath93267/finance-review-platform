@@ -14,6 +14,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class ReadyReportsComponent implements OnInit {
 
   @Input() AccountSet: any;
+  isLoading:boolean=false;
 
   ngOnInit() { }
 
@@ -25,9 +26,13 @@ export class ReadyReportsComponent implements OnInit {
   }
 
   fetchReadyReports() {
+    this.isLoading=true
     this.appService.getReadyReportsByAccount(this.account).subscribe(data => {
       this.Reports = data as FinalReport[];
       this.Reports.forEach(report => report.pdfUrl = this.GetPDFUrl(report.reportPdf));
+      // setTimeout(() => {
+        this.isLoading = false;
+      // }, 6000);
     });
   }
 
