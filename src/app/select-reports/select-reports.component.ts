@@ -41,6 +41,7 @@ export class SelectReportsComponent implements OnInit {
   selectedReport: number = 0;
   selectedReportsList: ReportsList[] = this.dataService.selectedReportsList;
   showReportAlreadyAdded: boolean = false;
+  showNoReportsAdded: boolean = false;
   selectedTemplate: number = this.dataService.selectedTemplate;
   selectedTemplateName=this.dataService.selectedTemplateName;
 
@@ -74,7 +75,13 @@ export class SelectReportsComponent implements OnInit {
   }
 
   MoveToTitlePage() {
-    this.childEvent.emit('Title Page');
+    this.selectedReportsList.length===0?this.showNoReportsAdded=true:this.childEvent.emit('Title Page');
+    if (this.showNoReportsAdded === true)
+    {
+      setTimeout(() => {
+        this.showNoReportsAdded = false;
+      }, 3000);
+    }
   }
 
   removeReport(id: number) {

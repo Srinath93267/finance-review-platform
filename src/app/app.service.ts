@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
-import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +12,7 @@ export class AppService {
 
     //#region private variables
     private baseUrl: string = environment.baseUrl;
-    private baseUrl2: string = "http://localhost:3000/";
+    private baseUrl2: string = environment.baseUrl2;
 
     //#region Data API Endpoints
     private API_KEY: string = environment.apiSecretKey;
@@ -27,6 +26,7 @@ export class AppService {
     private GETREADYREPORTSBYACCOUNT: string = this.baseUrl + "GetReadyReportsByAccount";
     private GETQUEUEREPORTSBYACCOUNT: string = this.baseUrl + "GetQueueReportsByAccount";
     private UPDATEPRESETBYPRESETID: string = this.baseUrl + "UpdatePreset";
+    private CREATENEWFINALREPORTREQUEST = this.baseUrl + "CreateNewFinalReportRequest"
     //#endregion
 
     //#region Report API Endpoints
@@ -137,6 +137,14 @@ export class AppService {
         });
         const updatePreset = { PresetId: id, NewSelectedReports: newSelectReports, RemovedSelectedReports: removedSelectReports };
         return this.http.patch(this.UPDATEPRESETBYPRESETID, updatePreset, { headers });
+    }
+
+    CreateNewFinalReportRequest(finalReportRequest: FinalReportRequest) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        return this.http.put(this.CREATENEWFINALREPORTREQUEST, finalReportRequest, { headers });
     }
     //#endregion
 
@@ -270,6 +278,15 @@ export interface FinalReport {
 export interface PresetInfo {
     reports: ReportsList;
     selected: boolean;
+}
+
+export interface FinalReportRequest {
+    accountNumber: number;
+    reportTitle: string;
+    reportDate: string;
+    presetID: number;
+    createdBy: string;
+    reportIDs: string;
 }
 //#endregion
 

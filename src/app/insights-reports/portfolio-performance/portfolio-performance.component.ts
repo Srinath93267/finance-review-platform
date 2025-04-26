@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ChartType } from 'ng-apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AppService, PortfolioPerformance } from '../../app.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-portfolio-performance',
   standalone: true,
-  imports: [NgApexchartsModule],
+  imports: [NgApexchartsModule, CommonModule],
   templateUrl: './portfolio-performance.component.html',
   styleUrl: './portfolio-performance.component.css'
 })
@@ -14,16 +15,20 @@ export class PortfolioPerformanceComponent implements OnInit {
 
   ngOnInit() {
     if (this.appService.AccountSet.accountNumber != 0) {
+      this.isDataLoading = true;
       this.appService.getPortfolioPerformanceData(this.appService.AccountSet.accountNumber).subscribe(
         (data) => {
           this.portforlioPerformanceData = data;
+          this.isDataLoading = false;
           this.setPortfolioPerformanceData();
         }
       );
       this.appService.account.subscribe(updatedData => {
+        this.isDataLoading = true;
         this.appService.getPortfolioPerformanceData(updatedData).subscribe(
           (data) => {
             this.portforlioPerformanceData = data;
+            this.isDataLoading = false;
             this.setPortfolioPerformanceData();
           }
         );
@@ -33,7 +38,9 @@ export class PortfolioPerformanceComponent implements OnInit {
 
   constructor(private appService: AppService) { }
 
-  portforlioPerformanceData: PortfolioPerformance = {} as PortfolioPerformance
+  portforlioPerformanceData: PortfolioPerformance = {} as PortfolioPerformance;
+
+  isDataLoading: boolean = true;
 
   InvestmentGrowthChart: any = {};
   RiskLevelChart: any = {};

@@ -29,7 +29,6 @@ export class AssetAllocationComponent implements OnInit {
     this.appService.getAssetAllocationData(this.appService.AccountSet.accountNumber).subscribe(
       (data) => {
         this.assetAllocationData = data;
-        console.log(this.assetAllocationData);
         this.setAssetAllocationData();
       }
     );
@@ -37,7 +36,6 @@ export class AssetAllocationComponent implements OnInit {
       this.appService.getAssetAllocationData(this.appService.AccountSet.accountNumber).subscribe(
         (data) => {
           this.assetAllocationData = data;
-          console.log(this.assetAllocationData);
           this.setAssetAllocationData();
         }
       );
