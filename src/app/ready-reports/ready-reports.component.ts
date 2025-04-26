@@ -1,8 +1,7 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { AppService, FinalReport } from '../app.service';
-import { DomSanitizer } from '@angular/platform-browser';
-
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-ready-reports',
@@ -14,7 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ReadyReportsComponent implements OnInit {
 
   @Input() AccountSet: any;
-  isLoading:boolean=false;
+  isLoading: boolean = false;
 
   ngOnInit() { }
 
@@ -25,30 +24,32 @@ export class ReadyReportsComponent implements OnInit {
     }
   }
 
+  constructor(private appService: AppService, @Inject(PLATFORM_ID) private platformId: Object) { }
+
   fetchReadyReports() {
-    this.isLoading=true
+    this.isLoading = true
     this.appService.getReadyReportsByAccount(this.account).subscribe(data => {
       this.Reports = data as FinalReport[];
       this.Reports.forEach(report => report.pdfUrl = this.GetPDFUrl(report.reportPdf));
-      // setTimeout(() => {
-        this.isLoading = false;
-      // }, 6000);
+      this.isLoading = false;
     });
   }
 
   GetPDFUrl(reportPdf: string) {
-    var binary_string = window.atob(reportPdf);
-    let bytes = new Uint8Array(binary_string.length);
-    const mappedData = bytes.map((byte, i) => binary_string.charCodeAt(i));
-    let blob = new Blob([mappedData], { type: "application/pdf" });
-    let objUrl = window.URL.createObjectURL(blob);
-    return objUrl;
+    if (isPlatformBrowser(this.platformId)) {
+      var binary_string = window.atob(reportPdf);
+      let bytes = new Uint8Array(binary_string.length);
+      const mappedData = bytes.map((byte, i) => binary_string.charCodeAt(i));
+      let blob = new Blob([mappedData], { type: "application/pdf" });
+      let objUrl = window.URL.createObjectURL(blob);
+      return objUrl;
+    }
+    else {
+      return null;
+    }
   }
 
-  constructor(private appService: AppService, private sanitizer: DomSanitizer) { }
-
   Reports: FinalReport[] = [];
-
   account: number = 0;
 
 }
