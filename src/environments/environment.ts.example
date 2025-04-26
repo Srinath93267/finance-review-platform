@@ -1,5 +1,6 @@
 export const environment = {
     production: false,
     apiSecretKey: 'PLACEHOLDER_SECRET',
-    baseUrl: 'PLACEHOLDER_API_URL',
+    baseUrl1: 'PLACEHOLDER_API_PREFIX1',
+    baseUrl2: 'PLACEHOLDER_API_PREFIX2',
 };
