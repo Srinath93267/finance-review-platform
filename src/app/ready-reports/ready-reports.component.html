@@ -1,3 +1,11 @@
+<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"
+    id="showReportDeletedMessage" *ngIf="this.showReportDeletedMessage===true">
+    <span class="font-medium">{{deletedReportName}}</span> has been deleted successfully.
+</div>
+<div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert"
+    id="showReportDeletedErrorMessage" *ngIf="this.showReportDeletedErrorMessage===true">
+    <span class="font-medium">Error Occured</span> in deleting the report. Please try again later
+</div>
 <div role="status" id="spinner" *ngIf="this.isLoading===true">
     <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
         viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,7 +18,8 @@
     </svg>
     <span class="sr-only">Loading...</span>
 </div>
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg p-2" *ngIf="this.Reports.length!==0 && this.isLoading===false">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg p-2"
+    *ngIf="this.Reports.length!==0 && this.isLoading===false">
     <div class="pb-4 bg-gray-50 dark:bg-gray-900">
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative mt-1">
@@ -119,7 +128,8 @@
                     </a>
                 </td>
                 <td class="px-6 py-4">
-                    <a type="button" class="font-medium text-red-600 hover:underline">
+                    <a type="button" class="font-medium text-red-600 hover:underline"
+                        (click)="deleteFinalReport(report.finalReportID, report.reportTitle)">
                         <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

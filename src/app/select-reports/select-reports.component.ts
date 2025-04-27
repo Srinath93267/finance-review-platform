@@ -74,8 +74,8 @@ export class SelectReportsComponent implements OnInit {
     }
   }
 
-  MoveToTitlePage() {
-    this.selectedReportsList.length===0?this.showNoReportsAdded=true:this.childEvent.emit('Title Page');
+  MoveToReviewAndSubmit() {
+    this.selectedReportsList.length===0?this.showNoReportsAdded=true:this.childEvent.emit('Review and Submit');
     if (this.showNoReportsAdded === true)
     {
       setTimeout(() => {

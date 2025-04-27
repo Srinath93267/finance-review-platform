@@ -26,7 +26,8 @@ export class AppService {
     private GETREADYREPORTSBYACCOUNT: string = this.baseUrl + "GetReadyReportsByAccount";
     private GETQUEUEREPORTSBYACCOUNT: string = this.baseUrl + "GetQueueReportsByAccount";
     private UPDATEPRESETBYPRESETID: string = this.baseUrl + "UpdatePreset";
-    private CREATENEWFINALREPORTREQUEST = this.baseUrl + "CreateNewFinalReportRequest"
+    private CREATENEWFINALREPORTREQUEST = this.baseUrl + "CreateNewFinalReportRequest";
+    private DELETEFINALREPORT = this.baseUrl + "DeleteFinalReport";
     //#endregion
 
     //#region Report API Endpoints
@@ -40,7 +41,7 @@ export class AppService {
     public selectedTemplate: number = 0;
     public selectedTemplateName: string = '';
     public templates: Preset[] = [];
-    public flow: Reportflow[] = [{ name: "Select Reports", selected: true }, { name: "Title Page", selected: false }, { name: "Review and Submit", selected: false }]
+    public flow: Reportflow[] = [{ name: "Select Reports", selected: true }, { name: "Review and Submit", selected: false }]
     public AccountSet: Account = { accountNumber: 0, clientName: "" };
     private accountSubject = new BehaviorSubject<number>(this.AccountSet.accountNumber);
     account = this.accountSubject.asObservable();
@@ -139,12 +140,24 @@ export class AppService {
         return this.http.patch(this.UPDATEPRESETBYPRESETID, updatePreset, { headers });
     }
 
-    CreateNewFinalReportRequest(finalReportRequest: FinalReportRequest) {
+    createNewFinalReportRequest(finalReportRequest: FinalReportRequest) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
         });
-        return this.http.put(this.CREATENEWFINALREPORTREQUEST, finalReportRequest, { headers });
+        return this.http.put<any>(this.CREATENEWFINALREPORTREQUEST, finalReportRequest, { headers, observe: 'response'});
+    }
+
+    deleteFinalReport(finalReportID: number) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        return this.http.request<any>('DELETE', this.DELETEFINALREPORT, {
+            headers,
+            body: finalReportID , 
+            observe: 'response'
+        });
     }
     //#endregion
 

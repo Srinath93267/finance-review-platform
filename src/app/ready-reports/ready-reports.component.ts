@@ -14,6 +14,9 @@ export class ReadyReportsComponent implements OnInit {
 
   @Input() AccountSet: any;
   isLoading: boolean = false;
+  showReportDeletedMessage: boolean = false;
+  showReportDeletedErrorMessage: boolean = false;
+  deletedReportName: string = "";
 
   ngOnInit() { }
 
@@ -47,6 +50,25 @@ export class ReadyReportsComponent implements OnInit {
     else {
       return null;
     }
+  }
+
+  deleteFinalReport(finalReportID: number, finalReportName: string) {
+    this.appService.deleteFinalReport(finalReportID).subscribe(response => {
+      if (response.status === 200) {
+        this.Reports = this.Reports.filter(report => report.finalReportID !== finalReportID);
+        this.deletedReportName = finalReportName;
+        this.showReportDeletedMessage = true;
+        setTimeout(() => {
+          this.showReportDeletedMessage = false;
+        }, 3000);
+      };
+    },
+      (error) => {
+        this.showReportDeletedErrorMessage = true;
+        setTimeout(() => {
+          this.showReportDeletedErrorMessage = false;
+        }, 3000);
+      });
   }
 
   Reports: FinalReport[] = [];

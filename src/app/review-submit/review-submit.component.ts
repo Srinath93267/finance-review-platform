@@ -29,8 +29,8 @@ export class ReviewSubmitComponent implements AfterViewInit {
   @Output() childEvent = new EventEmitter<string>(); // Declaring EventEmitter
 
   todayDate = new Date().toLocaleDateString("en-US");
-  BackToTitlePage() {
-    this.childEvent.emit('Title Page');
+  BackToSelectReports() {
+    this.childEvent.emit('Select Reports');
   }
 
   GenerateReport() {
@@ -42,14 +42,19 @@ export class ReviewSubmitComponent implements AfterViewInit {
       createdBy: "Admin",
       reportIDs: this.GetReportIdsfromSelectedReportsList()
     };
-    console.info("Final Report Request:", finalReportRequest);
-    this.appService.CreateNewFinalReportRequest(finalReportRequest).subscribe();
+    this.appService.createNewFinalReportRequest(finalReportRequest).subscribe(response => {
+      if (response.status === 200) {
+        // this.childEvent.emit('Report Generated'); // Emit the event to the parent component
+      } else {
+        console.error("Error generating report:", response);
+      }
+    });
   }
 
   GetReportIdsfromSelectedReportsList() {
     let reportIds: string = "";
     this.selectedReportsList.forEach((report) => {
-      reportIds += report.id + " ,";
+      reportIds += report.id + ", ";
     });
     return reportIds.slice(0, -2); // Remove the last comma
   }
