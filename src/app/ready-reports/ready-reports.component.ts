@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { CommonModule } from "@angular/common";
+import { AppService, FinalReport } from '../app.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-ready-reports',
@@ -8,46 +10,68 @@ import { CommonModule } from "@angular/common";
   templateUrl: './ready-reports.component.html',
   styleUrl: './ready-reports.component.css'
 })
-export class ReadyReportsComponent {
+export class ReadyReportsComponent implements OnInit {
 
-  Reports: Reports[] = [
-    {
-      account: 56789012,
-      accountHolder: "Rajesh Sharma",
-      reportName: "Portfolio Performance Report",
-      dateOfProcess: new Date("2025-01-30")
-    },
-    {
-      account: 23456789,
-      accountHolder: "Priya Iyer",
-      reportName: "Asset Allocation Report",
-      dateOfProcess: new Date("2025-01-29")
-    },
-    {
-      account: 67890123,
-      accountHolder: "Anil Verma",
-      reportName: "Risk Analysis Report",
-      dateOfProcess: new Date("2025-01-28")
-    },
-    {
-      account: 89012345,
-      accountHolder: "Kavita Nair",
-      reportName: "Investment Projection Report",
-      dateOfProcess: new Date("2025-01-27")
-    },
-    {
-      account: 34567890,
-      accountHolder: "Sandeep Menon",
-      reportName: "Tax Impact Report",
-      dateOfProcess: new Date("2025-01-26")
+  @Input() AccountSet: any;
+  isLoading: boolean = false;
+  showReportDeletedMessage: boolean = false;
+  showReportDeletedErrorMessage: boolean = false;
+  deletedReportName: string = "";
+
+  ngOnInit() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.account = this.appService.AccountSet.accountNumber;
+    if (this.appService.AccountSet.accountNumber !== 0 && this.appService.AccountSet.clientName !== "") {
+      this.fetchReadyReports();
     }
-  ];
+  }
 
-}
+  constructor(private appService: AppService, @Inject(PLATFORM_ID) private platformId: Object) { }
 
-export interface Reports {
-  account: number;
-  accountHolder: string;
-  reportName: string;
-  dateOfProcess: Date;
+  fetchReadyReports() {
+    this.isLoading = true
+    this.appService.getReadyReportsByAccount(this.account).subscribe(data => {
+      this.Reports = data as FinalReport[];
+      this.Reports.forEach(report => report.pdfUrl = this.GetPDFUrl(report.reportPdf));
+      this.isLoading = false;
+    });
+  }
+
+  GetPDFUrl(reportPdf: string) {
+    if (isPlatformBrowser(this.platformId)) {
+      var binary_string = window.atob(reportPdf);
+      let bytes = new Uint8Array(binary_string.length);
+      const mappedData = bytes.map((byte, i) => binary_string.charCodeAt(i));
+      let blob = new Blob([mappedData], { type: "application/pdf" });
+      let objUrl = window.URL.createObjectURL(blob);
+      return objUrl;
+    }
+    else {
+      return null;
+    }
+  }
+
+  deleteFinalReport(finalReportID: number, finalReportName: string) {
+    this.appService.deleteFinalReport(finalReportID).subscribe(response => {
+      if (response.status === 200) {
+        this.Reports = this.Reports.filter(report => report.finalReportID !== finalReportID);
+        this.deletedReportName = finalReportName;
+        this.showReportDeletedMessage = true;
+        setTimeout(() => {
+          this.showReportDeletedMessage = false;
+        }, 3000);
+      };
+    },
+      (error) => {
+        this.showReportDeletedErrorMessage = true;
+        setTimeout(() => {
+          this.showReportDeletedErrorMessage = false;
+        }, 3000);
+      });
+  }
+
+  Reports: FinalReport[] = [];
+  account: number = 0;
+
 }

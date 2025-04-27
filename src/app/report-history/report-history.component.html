@@ -16,7 +16,7 @@
             </h2>
             <div id="accordion-collapse-body-1" [ngClass]="readyReports_Tab ? 'hidden' : ''" aria-labelledby="accordion-collapse-heading-1">
                 <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                    <app-ready-reports/>
+                    <app-ready-reports [AccountSet] ="AccountSet"/>
                 </div>
             </div>
             <h2 id="accordion-collapse-heading-2">
@@ -34,7 +34,7 @@
             </h2>
             <div id="accordion-collapse-body-2" [ngClass]="reportQueue_Tab ? 'hidden' : ''" aria-labelledby="accordion-collapse-heading-2">
                 <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-                    <app-report-queue/>
+                    <app-report-queue [AccountSet] ="AccountSet"/>
                 </div>
             </div>
         </div>

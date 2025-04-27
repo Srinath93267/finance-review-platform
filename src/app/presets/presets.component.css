@@ -4,10 +4,11 @@
     height:fit-content;
 }
 
-#showTemplateErrorMessage {
+#showTemplateErrorMessage, #showPresetCreated {
     position: fixed;
     top: 0;
     right: 0;
     margin-top: 0.2in;
     margin-right: 0.2in;
+    z-index: 9999;
 }

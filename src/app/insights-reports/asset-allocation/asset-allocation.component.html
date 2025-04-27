@@ -1,0 +1,69 @@
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-span-1 w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-3">
+    <apx-chart [series]="allocationPercentagePieChart.series" [chart]="allocationPercentagePieChart.chart"
+      [labels]="allocationPercentagePieChart.labels" [colors]="allocationPercentagePieChart.colors"
+      [dataLabels]="allocationPercentagePieChart.dataLabels" [title]="allocationPercentagePieChart.title"
+      [legend]="allocationPercentagePieChart.legend">
+    </apx-chart>
+  </div>
+  <div class="col-span-1 w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-3">
+    <apx-chart [series]="historicalPerformance.series" [chart]="historicalPerformance.chart"
+      [xaxis]="historicalPerformance.xaxis" [dataLabels]="historicalPerformance.dataLabels"
+      [stroke]="historicalPerformance.stroke" [yaxis]="historicalPerformance.yaxis"
+      [legend]="historicalPerformance.legend" [plotOptions]="historicalPerformance.plotOptions">
+    </apx-chart>
+  </div>
+  <div class="col-span-1 w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-3">
+    <apx-chart [series]="targetAllocationPercentagePieChart.series" [chart]="targetAllocationPercentagePieChart.chart"
+      [labels]="targetAllocationPercentagePieChart.labels" [colors]="targetAllocationPercentagePieChart.colors"
+      [dataLabels]="targetAllocationPercentagePieChart.dataLabels" [title]="targetAllocationPercentagePieChart.title"
+      [legend]="targetAllocationPercentagePieChart.legend">
+    </apx-chart>
+  </div>
+  <div class="col-span-1 w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-3">
+    <apx-chart [series]="volatilityRiskLevel.series" [chart]="volatilityRiskLevel.chart"
+      [xaxis]="volatilityRiskLevel.xaxis" [yaxis]="volatilityRiskLevel.yaxis"
+      [dataLabels]="volatilityRiskLevel.dataLabels" [stroke]="volatilityRiskLevel.stroke"
+      [legend]="volatilityRiskLevel.legend" [plotOptions]="volatilityRiskLevel.plotOptions"
+      [title]="volatilityRiskLevel.title">
+    </apx-chart>
+  </div>
+  <div class="col-span-2">
+    <div class="relative overflow-x-auto">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-white uppercase bg-blue-600 dark:text-white">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Asset Class
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Liquidity Level
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Deviation from Target
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Divident Yield
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200" *ngFor="let asset of assetAllocationData.assetClass; let i = index">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {{asset}}
+            </th>
+            <td class="px-6 py-4">
+              {{assetAllocationData.liquidityLevel[i]}}
+            </td>
+            <td class="px-6 py-4">
+              {{assetAllocationData.deviationFromTarget[i]}}
+            </td>
+            <td class="px-6 py-4">
+              {{assetAllocationData.dividendYield[i]}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

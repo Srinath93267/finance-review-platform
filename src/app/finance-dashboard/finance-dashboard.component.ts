@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SelectAccountComponent } from "../select-account/select-account.component";
 import { FinanceTabsComponent } from "../finance-tabs/finance-tabs.component";
 
 @Component({

@@ -1,0 +1,19 @@
+a{
+    cursor: pointer;
+}
+
+#spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#showReportDeletedMessage,
+#showReportDeletedErrorMessage {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 0.2in;
+    margin-right: 0.2in;
+    z-index: 9999;
+}

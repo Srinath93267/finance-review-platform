@@ -16,8 +16,14 @@ export class SelectReportsComponent implements OnInit {
 
   ngOnInit() {
     if (this.dataService.reportsList.length === 0) {
-      this.fetchReportsList()
+      this.fetchReportsList();
     };
+    if (this.dataService.templates.length === 0) {
+      this.fetchPresetsList();
+    }
+    this.dataService.account.subscribe(updatedData => {
+      this.getReport();
+    });
   }
 
   @Output() childEvent = new EventEmitter<string>(); // Declaring EventEmitter
@@ -35,7 +41,14 @@ export class SelectReportsComponent implements OnInit {
   selectedReport: number = 0;
   selectedReportsList: ReportsList[] = this.dataService.selectedReportsList;
   showReportAlreadyAdded: boolean = false;
+  showNoReportsAdded: boolean = false;
   selectedTemplate: number = this.dataService.selectedTemplate;
+  selectedTemplateName=this.dataService.selectedTemplateName;
+
+  reportResponse: any = {};
+  report: string = ""
+
+  showReport: boolean = false;
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.dataService.selectedReportsList, event.previousIndex, event.currentIndex);
@@ -45,6 +58,7 @@ export class SelectReportsComponent implements OnInit {
   selectReport(index: number, id: number) {
     this.selectedIndex = index;
     this.selectedReport = id;
+    this.getReport();
   }
 
   AddtoReportList() {
@@ -60,8 +74,14 @@ export class SelectReportsComponent implements OnInit {
     }
   }
 
-  MoveToTitlePage() {
-    this.childEvent.emit('Title Page');
+  MoveToReviewAndSubmit() {
+    this.selectedReportsList.length===0?this.showNoReportsAdded=true:this.childEvent.emit('Review and Submit');
+    if (this.showNoReportsAdded === true)
+    {
+      setTimeout(() => {
+        this.showNoReportsAdded = false;
+      }, 3000);
+    }
   }
 
   removeReport(id: number) {
@@ -71,7 +91,9 @@ export class SelectReportsComponent implements OnInit {
   selectTemplate(value: any) {
     try {
       this.selectedTemplate = this.dataService.selectedTemplate = Number(value.target.value);
-      this.selectedReportsList = this.dataService.selectedReportsList = this.templates.filter(item => item.id === this.selectedTemplate)[0].reports;
+      this.selectedTemplateName = this.dataService.selectedTemplateName =this.templates.filter(template=>template.id===this.selectedTemplate)[0].name;
+      this.selectedReportsList = this.dataService.selectedReportsList = this.templates.
+      filter(item => item.id === this.selectedTemplate)[0].reports;
     }
     catch (err) {
       console.error(err);
@@ -87,6 +109,43 @@ export class SelectReportsComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching reports:', error);
+      }
+    );
+  }
+
+  fetchPresetsList() {
+    this.dataService.getAllPresetsList().subscribe(
+      (data) => {
+        this.templates = data; // Store response in templates
+        this.dataService.templates = this.templates;
+      },
+      (error) => {
+        console.error('Error fetching templates:', error);
+      }
+    );
+  }
+
+  getReport() {
+    const pdfElement = document.getElementById("pdf");
+    if (pdfElement) {
+      pdfElement.style.display = "none";
+      pdfElement.removeAttribute("src");
+    }
+    this.showReport = false;
+    const account = this.dataService.AccountSet.accountNumber;
+    this.dataService.getReport(account, this.selectedReport).subscribe(
+      (data) => {
+        this.showReport = true;
+        this.reportResponse = data;
+        this.report = this.reportResponse.Report;
+        document.getElementById("pdf")?.setAttribute("src", this.report + "#toolbar=0&navpanes=0&scrollbar=0&view=FitH");
+        const pdfElement = document.getElementById("pdf");
+        if (pdfElement) {
+          pdfElement.style.display = "block";
+        }
+      },
+      (error) => {
+        console.error('Error fetching report:', error);
       }
     );
   }

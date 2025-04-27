@@ -1,1 +1,16 @@
-<p>insights-reports works!</p>
+<div class="flex">
+  <div>
+    <div
+      class="w-48 flex-none text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <a type="button" *ngFor="let report of reportsList; let i=index"
+        [ngClass]="selectedIndex==i?(i==0?reportClass1:(i==reportsListCount-1?reportClass4:reportClass3)):reportClass2"
+        (click)="selectReport(i, report.id)">
+        {{report.name}}
+      </a>
+    </div>
+  </div>
+  <div class="w-64 flex-auto px-2">
+    <app-portfolio-performance *ngIf="this.selectedIndex===0"/>
+    <app-asset-allocation *ngIf="this.selectedIndex===1" />
+  </div>
+</div>
