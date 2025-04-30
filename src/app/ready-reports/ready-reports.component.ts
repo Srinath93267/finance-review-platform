@@ -16,7 +16,10 @@ export class ReadyReportsComponent implements OnInit {
   isLoading: boolean = false;
   showReportDeletedMessage: boolean = false;
   showReportDeletedErrorMessage: boolean = false;
+  showReportRequestedMessage: boolean = false;
+  showReportRequestedErrorMessage: boolean = false;
   deletedReportName: string = "";
+  requestedReportName: string = "";
 
   ngOnInit() { }
 
@@ -64,9 +67,31 @@ export class ReadyReportsComponent implements OnInit {
       };
     },
       (error) => {
+        console.error('Error deleting report:', error);
         this.showReportDeletedErrorMessage = true;
         setTimeout(() => {
           this.showReportDeletedErrorMessage = false;
+        }, 3000);
+      });
+  }
+
+  regenerateFinalReport(finalReportID: number, finalReportName: string) {
+    this.appService.regenerateFinalReport(finalReportID).subscribe(response => {
+      if (response.status === 200) {
+        this.Reports = this.Reports.filter(report => report.finalReportID !== finalReportID);
+        this.requestedReportName = finalReportName;
+        this.showReportRequestedMessage = true;
+        setTimeout(() => {
+          this.showReportRequestedMessage = false;
+        }, 3000);
+
+      };
+    },
+      (error) => {
+        console.error('Error regenerating report:', error);
+        this.showReportRequestedErrorMessage = true;
+        setTimeout(() => {
+          this.showReportRequestedErrorMessage = false;
         }, 3000);
       });
   }

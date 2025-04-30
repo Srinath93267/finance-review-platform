@@ -28,6 +28,7 @@ export class AppService {
     private UPDATEPRESETBYPRESETID: string = this.baseUrl + "UpdatePreset";
     private CREATENEWFINALREPORTREQUEST = this.baseUrl + "CreateNewFinalReportRequest";
     private DELETEFINALREPORT = this.baseUrl + "DeleteFinalReport";
+    private REGENERATEFINALREPORT = this.baseUrl + "RegenerateFinalReport";
     //#endregion
 
     //#region Report API Endpoints
@@ -159,6 +160,18 @@ export class AppService {
             observe: 'response'
         });
     }
+    	
+    regenerateFinalReport(finalReportID: number) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.API_KEY,
+        });
+        return this.http.request<any>('PATCH', this.REGENERATEFINALREPORT, {
+            headers,
+            body: finalReportID,
+            observe: 'response'
+        });
+    }
     //#endregion
 
     //#region report services
@@ -173,25 +186,21 @@ export class AppService {
             return this.getPortfolioPerformanceReport(Account);
         }
     }
-    getPortfolioPerformanceReport(Account: number) {//'X-API-KEY': this.API_KEY,
+    getPortfolioPerformanceReport(Account: number) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-
             'ACCOUNT': Account
         });
         return this.http.get(this.GETPORTFOLIOPERFORMANCEREPORT, { headers });
     }
 
-    getAssetAllocationReport(Account: number) {//'X-API-KEY': this.API_KEY,
+    getAssetAllocationReport(Account: number) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-
             'ACCOUNT': Account
         });
         return this.http.get(this.GETASSETALLOCATIONREPORT, { headers });
     }
-
-
     //#endregion
 }
 
