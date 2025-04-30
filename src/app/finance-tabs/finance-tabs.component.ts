@@ -6,6 +6,8 @@ import { GenerateReportComponent } from "../generate-report/generate-report.comp
 import { PresetsComponent } from "../presets/presets.component";
 import { AppService, Account } from '../app.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-finance-tabs',
@@ -22,7 +24,7 @@ export class FinanceTabsComponent implements OnInit {
     }
   }
 
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService, private router: Router) { }
 
   Tabs: string[] = ["Report History", "Reports Insights", "Generate a Report", "Presets", "Settings"];
   selectedTab = this.Tabs[0];
@@ -59,7 +61,7 @@ export class FinanceTabsComponent implements OnInit {
       }
     },
       (error) => {
-        // console.error('Error fetching accounts: ', error);
+        this.router.navigate(['/error']);
       }
     );
   }
