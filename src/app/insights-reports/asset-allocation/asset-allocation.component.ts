@@ -26,16 +26,20 @@ export type ChartOptions = {
 export class AssetAllocationComponent implements OnInit {
 
   ngOnInit() {
+    this.isDataLoading = true;
     this.appService.getAssetAllocationData(this.appService.AccountSet.accountNumber).subscribe(
       (data) => {
         this.assetAllocationData = data;
+        this.isDataLoading = false;
         this.setAssetAllocationData();
       }
     );
     this.appService.account.subscribe(updatedData => {
+      this.isDataLoading = true;
       this.appService.getAssetAllocationData(this.appService.AccountSet.accountNumber).subscribe(
         (data) => {
           this.assetAllocationData = data;
+          this.isDataLoading = false;
           this.setAssetAllocationData();
         }
       );
@@ -48,6 +52,8 @@ export class AssetAllocationComponent implements OnInit {
   targetAllocationPercentagePieChart: any = {};
   historicalPerformance: ChartOptions = {} as ChartOptions;
   volatilityRiskLevel: ChartOptions = {} as ChartOptions;
+
+  isDataLoading: boolean = true;
 
   setAssetAllocationData() {
     this.setAllocationPercentage();
