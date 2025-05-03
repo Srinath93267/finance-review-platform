@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "render-report-api-b5ed1",
     "public": "dist/finance-review-platform",
     "ignore": [
       "firebase.json",
