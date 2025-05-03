@@ -25,9 +25,9 @@ jobs:
       - name: Create environment.ts
         run: |
           cp src/environments/environment.ts.example src/environments/environment.ts
-          sed -i 's/PLACEHOLDER_SECRET/${{ secrets.API_SECRET_KEY }}/g' src/environments/environment.ts
-          sed -i 's/PLACEHOLDER_API_PREFIX1/${{ secrets.API_PREFIX1 }}/g' src/environments/environment.ts
-          sed -i 's/PLACEHOLDER_API_PREFIX2/${{ secrets.API_PREFIX2 }}/g' src/environments/environment.ts
+          sed -i 's#PLACEHOLDER_SECRET#'"${{ secrets.API_SECRET_KEY }}"'#g' src/environments/environment.ts
+          sed -i 's#PLACEHOLDER_API_PREFIX1#'"${{ secrets.API_PREFIX1 }}"'#g' src/environments/environment.ts
+          sed -i 's#PLACEHOLDER_API_PREFIX2#'"${{ secrets.API_PREFIX2 }}"'#g' src/environments/environment.ts
 
       - name: Build Angular App
         run: npm run build --configuration=production
