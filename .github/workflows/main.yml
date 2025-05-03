@@ -26,13 +26,18 @@ jobs:
         run: |
           cp src/environments/environment.ts.example src/environments/environment.ts
           sed -i 's/PLACEHOLDER_SECRET/${{ secrets.API_SECRET_KEY }}/g' src/environments/environment.ts
+          sed -i 's/PLACEHOLDER_API_PREFIX1/${{ secrets.API_PREFIX1 }}/g' src/environments/environment.ts
+          sed -i 's/PLACEHOLDER_API_PREFIX2/${{ secrets.API_PREFIX2 }}/g' src/environments/environment.ts
 
       - name: Build Angular App
         run: npm run build --configuration=production
 
-      # - name: Deploy
-      #   if: success()
-      #   uses: JamesIves/github-pages-deploy-action@v4
-      #   with:
-      #     branch: gh-pages  # Branch to deploy
-      #     folder: dist/your-angular-app  # Adjust folder based on `angular.json`
+      - name: 🔧 Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: 🚀 Deploy to Firebase Hosting
+        if: github.ref == 'refs/heads/main'
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          firebase deploy --only hosting --project render-report-api-b5ed1
