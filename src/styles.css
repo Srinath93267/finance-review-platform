@@ -16,10 +16,3 @@ thead {
     top: 0;
     z-index: 1;
 }
-
-#spinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20%;
-}
