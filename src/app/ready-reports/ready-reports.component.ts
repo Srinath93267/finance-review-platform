@@ -2,11 +2,12 @@ import { Component, Inject, Input, OnInit, PLATFORM_ID, SimpleChanges } from '@a
 import { CommonModule } from "@angular/common";
 import { AppService, FinalReport } from '../app.service';
 import { isPlatformBrowser } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ready-reports',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './ready-reports.component.html',
   styleUrl: './ready-reports.component.css'
 })
@@ -20,6 +21,7 @@ export class ReadyReportsComponent implements OnInit {
   showReportRequestedErrorMessage: boolean = false;
   deletedReportName: string = "";
   requestedReportName: string = "";
+  reportSearch: string = '';
 
   ngOnInit() { }
 
@@ -94,6 +96,14 @@ export class ReadyReportsComponent implements OnInit {
           this.showReportRequestedErrorMessage = false;
         }, 3000);
       });
+  }
+
+  get filteredReports() {
+    return this.Reports.filter(row =>
+      Object.values(row).some(val =>
+        val.toString().toLowerCase().includes(this.reportSearch.toLowerCase())
+      )
+    );
   }
 
   Reports: FinalReport[] = [];
