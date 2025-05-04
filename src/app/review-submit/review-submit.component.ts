@@ -26,9 +26,27 @@ export class ReviewSubmitComponent implements AfterViewInit {
     this.templateUsed = this.appService.selectedTemplateName !== "" ? this.appService.selectedTemplateName : "None";
   };
 
+  todayDate = new Date().toLocaleDateString("en-US");
+
   @Output() childEvent = new EventEmitter<string>(); // Declaring EventEmitter
 
-  todayDate = new Date().toLocaleDateString("en-US");
+  convertToISOString() {
+    const parts = (document.getElementById('default-datepicker') as HTMLInputElement)?.value.split('/');
+    if (parts.length !== 3) return '';
+
+    const [month, day, year] = parts.map(part => Number(part));
+    if (!month || !day || !year) return '';
+
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const milliseconds = now.getMilliseconds();
+
+    const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds, milliseconds));
+    return date.toISOString();
+  }
+
   BackToSelectReports() {
     this.childEvent.emit('Select Reports');
   }
@@ -37,7 +55,7 @@ export class ReviewSubmitComponent implements AfterViewInit {
     const finalReportRequest: FinalReportRequest = {
       accountNumber: this.appService.AccountSet.accountNumber,
       reportTitle: this.titleOfAnalysis,
-      reportDate: this.GetDate(),
+      reportDate: this.convertToISOString(),
       presetID: this.appService.selectedTemplate,
       createdBy: "Admin",
       reportIDs: this.GetReportIdsfromSelectedReportsList()
@@ -57,15 +75,5 @@ export class ReviewSubmitComponent implements AfterViewInit {
       reportIds += report.id + ", ";
     });
     return reportIds.slice(0, -2); // Remove the last comma
-  }
-
-  GetDate() {
-    const [month, day, year] = this.todayDate.split("/").map(Number);
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours}:${minutes}:${seconds}`;
-    return formattedDate;
   }
 }
