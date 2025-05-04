@@ -1,17 +1,19 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { AppService, FinalReport } from '../app.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-report-queue',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './report-queue.component.html',
   styleUrl: './report-queue.component.css'
 })
 export class ReportQueueComponent implements OnInit {
 
   @Input() AccountSet: any;
+  reportSearch: string = '';
 
   ngOnInit() { }
   fetchQueueReports() {
@@ -29,8 +31,15 @@ export class ReportQueueComponent implements OnInit {
 
   constructor(private appService: AppService) { }
 
-  Reports: FinalReport[] = [];
+  get filteredReports() {
+    return this.Reports.filter(row =>
+      Object.values(row).some(val =>
+        val.toString().toLowerCase().includes(this.reportSearch.toLowerCase())
+      )
+    );
+  }
 
+  Reports: FinalReport[] = [];
   account: number = 0;
 
 }
