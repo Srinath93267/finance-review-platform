@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService, ReportsList, NewPreset, PresetInfo } from '../app.service';
 import { FormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { PresetListsComponent } from "../preset-lists/preset-lists.component";
@@ -13,6 +13,8 @@ import { PresetListsComponent } from "../preset-lists/preset-lists.component";
   styleUrl: './presets.component.css'
 })
 export class PresetsComponent implements OnInit {
+
+  @ViewChild(PresetListsComponent) presetListsComponent!: PresetListsComponent;
 
   ngOnInit(): void {
     if (this.dataService.reportsList.length === 0) {
@@ -104,6 +106,7 @@ export class PresetsComponent implements OnInit {
       setTimeout(() => {
         this.showPresetCreated = false;
       }, 3000);
+      this.presetListsComponent.fetchPresetsList();
     },
       (error) => {
 
