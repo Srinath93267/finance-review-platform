@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { AppService, ReportsList, FinalReportRequest } from '../app.service';
+import { AppService, ReportsList, FinalReportRequest, Account } from '../app.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,14 +11,22 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './review-submit.component.html',
   styleUrl: './review-submit.component.css'
 })
-export class ReviewSubmitComponent implements AfterViewInit {
+export class ReviewSubmitComponent implements OnInit, AfterViewInit {
 
   titleOfAnalysis: string = "";
   reportRecipient: string = "";
+  AccountSet: Account = this.appService.AccountSet;
+
+  ngOnInit() {
+    this.appService.account.subscribe(updatedData => {
+      this.AccountSet = this.appService.AccountSet;
+    });
+  }
 
   ngAfterViewInit() {
     initFlowbite();
   }
+  
   selectedReportsList: ReportsList[] = [];
   templateUsed: string = "";
   constructor(private appService: AppService) {
