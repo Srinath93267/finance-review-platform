@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ReportHistoryComponent } from "../report-history/report-history.component";
 import { CommonModule } from "@angular/common";
 import { InsightsReportsComponent } from "../insights-reports/insights-reports.component";
@@ -7,6 +7,7 @@ import { PresetsComponent } from "../presets/presets.component";
 import { AppService, Account } from '../app.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 
 
 @Component({
@@ -16,13 +17,17 @@ import { Router } from '@angular/router';
   templateUrl: './finance-tabs.component.html',
   styleUrl: './finance-tabs.component.css'
 })
-export class FinanceTabsComponent implements OnInit {
+export class FinanceTabsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (this.appService.AccountSet.accountNumber == 0 && this.appService.AccountSet.clientName == "") {
       this.fetchAccounts();
     }
   }
+
+  ngAfterViewInit() {
+      initFlowbite();
+    }
 
   constructor(private appService: AppService, private router: Router) { }
 
