@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class ReviewSubmitComponent implements AfterViewInit {
 
   titleOfAnalysis: string = "";
-  reportRecipient:string = "";
+  reportRecipient: string = "";
 
   ngAfterViewInit() {
     initFlowbite();
@@ -26,9 +26,27 @@ export class ReviewSubmitComponent implements AfterViewInit {
     this.templateUsed = this.appService.selectedTemplateName !== "" ? this.appService.selectedTemplateName : "None";
   };
 
+  todayDate = new Date().toLocaleDateString("en-US");
+
   @Output() childEvent = new EventEmitter<string>(); // Declaring EventEmitter
 
-  todayDate = new Date().toLocaleDateString("en-US");
+  convertToISOString() {
+    const parts = (document.getElementById('default-datepicker') as HTMLInputElement)?.value.split('/');
+    if (parts.length !== 3) return '';
+
+    const [month, day, year] = parts.map(part => Number(part));
+    if (!month || !day || !year) return '';
+
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const milliseconds = now.getMilliseconds();
+
+    const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds, milliseconds));
+    return date.toISOString();
+  }
+
   BackToSelectReports() {
     this.childEvent.emit('Select Reports');
   }
@@ -37,7 +55,7 @@ export class ReviewSubmitComponent implements AfterViewInit {
     const finalReportRequest: FinalReportRequest = {
       accountNumber: this.appService.AccountSet.accountNumber,
       reportTitle: this.titleOfAnalysis,
-      reportDate: new Date().toISOString(),
+      reportDate: this.convertToISOString(),
       presetID: this.appService.selectedTemplate,
       createdBy: "Admin",
       reportIDs: this.GetReportIdsfromSelectedReportsList()
