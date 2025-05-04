@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './preset-lists.component.css'
 })
 export class PresetListsComponent implements OnInit {
+isDataLoading: boolean=false;
 
   ngOnInit() {
     if (this.presets.length === 0) {
@@ -102,10 +103,12 @@ export class PresetListsComponent implements OnInit {
   }
 
   fetchPresetsList() {
+    this.isDataLoading = true;
     this.dataService.getAllPresetsList().subscribe(
       (data) => {
         this.presets = data;
         this.dataService.templates = this.presets;
+        this.isDataLoading = false;
       }
     );
   }

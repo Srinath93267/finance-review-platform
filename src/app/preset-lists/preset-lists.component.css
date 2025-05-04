@@ -11,3 +11,10 @@
     margin-right: 0.2in;
     z-index:9999;
 }
+
+#spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
