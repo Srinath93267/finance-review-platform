@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class ReviewSubmitComponent implements AfterViewInit {
 
   titleOfAnalysis: string = "";
-  reportRecipient:string = "";
+  reportRecipient: string = "";
 
   ngAfterViewInit() {
     initFlowbite();
@@ -37,7 +37,7 @@ export class ReviewSubmitComponent implements AfterViewInit {
     const finalReportRequest: FinalReportRequest = {
       accountNumber: this.appService.AccountSet.accountNumber,
       reportTitle: this.titleOfAnalysis,
-      reportDate: new Date().toISOString(),
+      reportDate: this.GetDate(),
       presetID: this.appService.selectedTemplate,
       createdBy: "Admin",
       reportIDs: this.GetReportIdsfromSelectedReportsList()
@@ -57,5 +57,15 @@ export class ReviewSubmitComponent implements AfterViewInit {
       reportIds += report.id + ", ";
     });
     return reportIds.slice(0, -2); // Remove the last comma
+  }
+
+  GetDate() {
+    const [month, day, year] = this.todayDate.split("/").map(Number);
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours}:${minutes}:${seconds}`;
+    return formattedDate;
   }
 }
