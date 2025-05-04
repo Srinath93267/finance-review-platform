@@ -8,7 +8,7 @@ import { AppService, Reportflow } from '../app.service';
 @Component({
   selector: 'app-generate-report',
   standalone: true,
-  imports: [CommonModule, SelectReportsComponent, TitlePageComponent, ReviewSubmitComponent],
+  imports: [CommonModule, SelectReportsComponent, ReviewSubmitComponent],
   templateUrl: './generate-report.component.html',
   styleUrl: './generate-report.component.css'
 })
