@@ -16,6 +16,7 @@ export class ReviewSubmitComponent implements OnInit, AfterViewInit {
   titleOfAnalysis: string = "";
   reportRecipient: string = "";
   AccountSet: Account = this.appService.AccountSet;
+  showFinalReportSubmissionSuccessAlert: boolean = false;
 
   ngOnInit() {
     this.appService.account.subscribe(updatedData => {
@@ -26,7 +27,7 @@ export class ReviewSubmitComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     initFlowbite();
   }
-  
+
   selectedReportsList: ReportsList[] = [];
   templateUsed: string = "";
   constructor(private appService: AppService) {
@@ -70,7 +71,13 @@ export class ReviewSubmitComponent implements OnInit, AfterViewInit {
     };
     this.appService.createNewFinalReportRequest(finalReportRequest).subscribe(response => {
       if (response.status === 200) {
-        // this.childEvent.emit('Report Generated'); // Emit the event to the parent component
+        this.showFinalReportSubmissionSuccessAlert = true;
+        setTimeout(() => {
+          this.showFinalReportSubmissionSuccessAlert = false;
+        }, 3000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       } else {
         console.error("Error generating report:", response);
       }
