@@ -93,7 +93,7 @@ export class AppService {
             'Content-Type': 'application/json',
             'X-API-KEY': this.API_KEY,
         });
-        return this.http.delete(this.DELETEPRESET, { headers, body: id });
+        return this.http.delete(this.DELETEPRESET, { headers, body: id, observe: 'response' });
     }
 
     getPortfolioPerformanceData(Account: number) {
@@ -138,7 +138,7 @@ export class AppService {
             'X-API-KEY': this.API_KEY,
         });
         const updatePreset = { PresetId: id, NewSelectedReports: newSelectReports, RemovedSelectedReports: removedSelectReports };
-        return this.http.patch(this.UPDATEPRESETBYPRESETID, updatePreset, { headers });
+        return this.http.patch(this.UPDATEPRESETBYPRESETID, updatePreset, { headers, observe: 'response' });
     }
 
     createNewFinalReportRequest(finalReportRequest: FinalReportRequest) {

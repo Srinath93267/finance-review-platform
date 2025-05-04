@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './preset-lists.component.css'
 })
 export class PresetListsComponent implements OnInit {
-isDataLoading: boolean=false;
+  isDataLoading: boolean = false;
 
   ngOnInit() {
     if (this.presets.length === 0) {
@@ -39,10 +39,12 @@ isDataLoading: boolean=false;
   reportList3: PresetInfo[] = [];
   selectAll: boolean = false; // Header checkbox model
   showEditPresetErrorMessage: boolean = false;
+  showEditPresetSuccessMessage: boolean = false;
+  showDeletePresetSuccessMessage:boolean = false;
 
   ToggleShowPresetReports(id: number) {
     this.presetsReports = this.presets.filter(item => item.id === id)[0].reports;
-    this.modalTemplateName = this.presets.filter(item => item.id === id)[0].name
+    this.modalTemplateName = this.presets.filter(item => item.id === id)[0].name;
     this.showPresetReports = !this.showPresetReports;
   }
 
@@ -85,21 +87,37 @@ isDataLoading: boolean=false;
       }, 3000);
     }
   }
+
   reset() {
     this.reportList2 = [];
     this.reportList3 = [];
   }
+
   DeletePreset(id: number) {
-    this.presets = this.presets.filter(preset => preset.id != id);
-    this.dataService.deletePreset(id).subscribe(
-      (data) => {
+    this.modalTemplateName = this.presets.filter(item => item.id === id)[0].name
+    this.dataService.deletePreset(id).subscribe((response) => {
+      if (response.status === 200) {
+        this.presets = this.presets.filter(preset => preset.id != id);
         this.dataService.templates = this.dataService.templates.filter(preset => preset.id != id);
+        this.showDeletePresetSuccessMessage = true;
+        setTimeout(() => {
+          this.showDeletePresetSuccessMessage = false;
+        }, 3000);
       }
+    }
     );
   }
 
   async callUpdatePreset(id: number, newSelectReports: PresetInfo[], removedSelectReports: PresetInfo[]) {
-    await this.dataService.updatePreset(id, newSelectReports, removedSelectReports).subscribe();
+    await this.dataService.updatePreset(id, newSelectReports, removedSelectReports).subscribe(response => {
+      if (response.status === 200) {
+        this.showEditPresetSuccessMessage = true;
+        setTimeout(() => {
+          this.showEditPresetSuccessMessage = false;
+        }, 3000);
+        this.fetchPresetsList();
+      }
+    });
   }
 
   fetchPresetsList() {
