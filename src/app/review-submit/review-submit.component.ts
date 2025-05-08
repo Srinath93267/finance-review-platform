@@ -13,10 +13,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class ReviewSubmitComponent implements OnInit, AfterViewInit {
 
-  titleOfAnalysis: string = "";
+  titleOfAnalysis: string = "";  
   reportRecipient: string = "";
   AccountSet: Account = this.appService.AccountSet;
   showFinalReportSubmissionSuccessAlert: boolean = false;
+  comments: string = "";
 
   ngOnInit() {
     this.appService.account.subscribe(updatedData => {
@@ -67,7 +68,8 @@ export class ReviewSubmitComponent implements OnInit, AfterViewInit {
       reportDate: this.convertToISOString(),
       presetID: this.appService.selectedTemplate,
       createdBy: "Admin",
-      reportIDs: this.GetReportIdsfromSelectedReportsList()
+      reportIDs: this.GetReportIdsfromSelectedReportsList(),
+      comments:this.comments==""?null:this.comments,
     };
     this.appService.createNewFinalReportRequest(finalReportRequest).subscribe(response => {
       if (response.status === 200) {
