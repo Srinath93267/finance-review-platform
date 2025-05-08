@@ -17,6 +17,7 @@ export class ReviewSubmitComponent implements OnInit, AfterViewInit {
   reportRecipient: string = "";
   AccountSet: Account = this.appService.AccountSet;
   showFinalReportSubmissionSuccessAlert: boolean = false;
+  showFinalReportSubmissionErrorAlert:boolean = false;
   comments: string = "";
 
   ngOnInit() {
@@ -69,7 +70,7 @@ export class ReviewSubmitComponent implements OnInit, AfterViewInit {
       presetID: this.appService.selectedTemplate,
       createdBy: "Admin",
       reportIDs: this.GetReportIdsfromSelectedReportsList(),
-      comments:this.comments==""?null:this.comments,
+      comments:this.comments==""?undefined:this.comments,
     };
     this.appService.createNewFinalReportRequest(finalReportRequest).subscribe(response => {
       if (response.status === 200) {
@@ -81,6 +82,10 @@ export class ReviewSubmitComponent implements OnInit, AfterViewInit {
           window.location.reload();
         }, 3000);
       } else {
+        this.showFinalReportSubmissionErrorAlert = true;
+        setTimeout(() => {
+          this.showFinalReportSubmissionErrorAlert = false;
+        }, 3000);
         console.error("Error generating report:", response);
       }
     });

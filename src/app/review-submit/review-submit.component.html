@@ -2,6 +2,10 @@
 id="showFinalReportSubmissionSuccessAlert" *ngIf="showFinalReportSubmissionSuccessAlert">
     Report Request has been submitted<span class="font-medium"> Successfully!</span>
 </div>
+<div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert"
+id="showFinalReportSubmissionErrorAlert" *ngIf="showFinalReportSubmissionErrorAlert">
+    An <span class="font-medium">Error</span> has occured. Please check your Inputs <br> or try again after some time.
+</div>
 <div class="bg-white rounded-lg w-full mt-2">
     <div class="grid grid-cols-1 md:grid-cols-3">
         <div class="col-span-1">
