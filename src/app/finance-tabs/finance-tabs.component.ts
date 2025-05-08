@@ -31,7 +31,7 @@ export class FinanceTabsComponent implements OnInit, AfterViewInit {
 
   constructor(private appService: AppService, private router: Router) { }
 
-  Tabs: string[] = ["Report History", "Reports Insights", "Generate a Report", "Presets", "Settings"];
+  Tabs: string[] = ["Report History", "Reports Insights", "Generate a Report", "Presets"];
   selectedTab = this.Tabs[0];
 
   activeTabClass = "inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full dark:bg-blue-600";
