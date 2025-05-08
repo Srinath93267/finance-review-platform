@@ -19,7 +19,17 @@ export class ReportQueueComponent implements OnInit {
   fetchQueueReports() {
     this.appService.getQueueReportsByAccount(this.account).subscribe(data => {
       this.Reports = data;
+      this.Reports.forEach(report => report.lastUpdatedOn = this.GetFormattedDate(report.lastUpdatedOn) || '');
     });
+  }
+
+  GetFormattedDate(dateString: string) {
+    if (dateString) {
+      const date = new Date(dateString);
+      const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      return date.toLocaleDateString('en-US', options);
+    }
+    return null;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -39,8 +39,18 @@ export class ReadyReportsComponent implements OnInit {
     this.appService.getReadyReportsByAccount(this.account).subscribe(data => {
       this.Reports = data as FinalReport[];
       this.Reports.forEach(report => report.pdfUrl = this.GetPDFUrl(report.reportPdf));
+      this.Reports.forEach(report => report.lastUpdatedOn = this.GetFormattedDate(report.lastUpdatedOn) || '');
       this.isLoading = false;
     });
+  }
+
+  GetFormattedDate(dateString: string) {
+    if (dateString) {
+      const date = new Date(dateString);
+      const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      return date.toLocaleDateString('en-US', options);
+    }
+    return null;
   }
 
   GetPDFUrl(reportPdf: string) {
