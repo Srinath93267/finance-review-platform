@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
-import { DatePipe } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppService {
 
-    constructor(private http: HttpClient, private datePipe: DatePipe) { }
+    constructor(private http: HttpClient) { }
 
     //#region private variables
     private baseUrl: string = environment.baseUrl;
@@ -188,25 +187,32 @@ export class AppService {
         }
     }
     getPortfolioPerformanceReport(Account: number) {
-        const now = new Date();
-        const formattedDate = this.datePipe.transform(now, 'MM/dd/yyyy');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'ACCOUNT': Account,
-            'REPORTDATE': formattedDate || ''
-        }); 
+            'REPORTDATE': this.getFormattedDate() || ''
+        });
         return this.http.get(this.GETPORTFOLIOPERFORMANCEREPORT, { headers });
     }
 
     getAssetAllocationReport(Account: number) {
-        const now = new Date();
-        const formattedDate = this.datePipe.transform(now, 'MM/dd/yyyy');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'ACCOUNT': Account,
-            'REPORTDATE': formattedDate || ''
+            'REPORTDATE': this.getFormattedDate() || ''
         });
         return this.http.get(this.GETASSETALLOCATIONREPORT, { headers });
+    }
+    //#endregion
+
+    //#region Helper functions
+    getFormattedDate(): string {
+        const today = new Date();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');  // Months are 0-indexed
+        const dd = String(today.getDate()).padStart(2, '0');
+        const yyyy = today.getFullYear();
+
+        return `${mm}/${dd}/${yyyy}`;
     }
     //#endregion
 }
