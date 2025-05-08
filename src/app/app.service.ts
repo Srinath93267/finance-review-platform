@@ -305,6 +305,7 @@ export interface FinalReport {
     reportIDs: string;
     createdOn: string;
     lastUpdatedOn: string;
+    comments:string;
     clientName: string;
     presetName: string;
     pdfUrl?: any;
@@ -322,6 +323,7 @@ export interface FinalReportRequest {
     presetID: number;
     createdBy: string;
     reportIDs: string;
+    comments: any;
 }
 //#endregion
 
