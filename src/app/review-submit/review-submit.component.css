@@ -1,6 +1,6 @@
 @source "../node_modules/flowbite-datepicker";
 
-#showFinalReportSubmissionSuccessAlert {
+#showFinalReportSubmissionSuccessAlert, #showFinalReportSubmissionErrorAlert {
     position: fixed;
     top: 0;
     right: 0;
